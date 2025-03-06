@@ -8,33 +8,25 @@
 @font-face {
   font-family: 'Roobert';
   src: url('./Fonts/RoobertTRIAL-Regular.woff') format('woff'), url('./Fonts/RoobertTRIAL-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
 }
 
-
+@font-face {
+  font-family: 'RoobertTRAIL';
+  src: url("./Fonts/RoobertTRIAL-Regular.woff") format('woff'), url("./Fonts/RoobertTRIAL-Regular.woff2");
+}
 
 body {
-  font-family: 'Roobert', Georgia, 'Times New Roman', Times, serif;
+  font-family: 'RoobertTRAIL', Georgia, 'Times New Roman', Times, serif;
 }
 
 .title {
-  font-size: 88px;
   color: #1a1b1c;
   max-width: 100%;
   display: inline-block;
   will-change: transform;
   line-height: 0.945;
   letter-spacing: -.07em;
-}
-
-
-.page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+  text-align: center;
 }
 
 .bottom-grid {
@@ -42,6 +34,13 @@ body {
   grid-template-columns: repeat(7, 1fr);
   width: 95%;
   margin: 0 auto;
-  
-  border: 1px solid red;
+  justify-items: self-start;
+  margin-top: 48px;
+}
+
+.btn {
+  background-color: #1A1B1C;
+  padding: 8px 16px;
+  color: #fff;
+  cursor: not-allowed;
 }
