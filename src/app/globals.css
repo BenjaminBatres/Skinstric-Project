@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 /* @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -17,6 +18,10 @@
 
 body {
   font-family: 'RoobertTRAIL', Georgia, 'Times New Roman', Times, serif;
+}
+
+html {
+  overflow-x: hidden;
 }
 
 .title {

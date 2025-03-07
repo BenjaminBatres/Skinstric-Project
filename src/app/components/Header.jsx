@@ -16,6 +16,7 @@ export default function Header() {
             width={75}
             height={0}
             alt="intro"
+            draggable='false'
           ></Image>
         </div>
         <button className="btn text-sm">Enter Code</button>
