@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="flex h-[50vh] justify-center xl:justify-between items-center relative">
+      <div className="flex h-[55vh] justify-center xl:justify-between items-center relative">
         <img
           src={"/images/Rectangle 2779.png"}
           className="w-70 hidden xl:block"
@@ -11,7 +11,7 @@ export default function Home() {
         />
         <img
           src={"/images/Rectangle 2778.png"}
-          className="w-45 xl:hidden"
+          className="w-50 xl:hidden"
           alt="left-rectangle"
         />
         <span className="absolute left-8">
@@ -48,7 +48,7 @@ export default function Home() {
         </button>
         <img
           src={"/images/Rectangle 2779.png"}
-          className="w-45 relative xl:hidden"
+          className="w-50 relative xl:hidden"
           alt="right-rectangle"
         />
         <img
@@ -69,7 +69,7 @@ export default function Home() {
       </div>
 
       <div>
-        <p className="pl-8 w-70 uppercase text-xs md:text-sm md:w-90">
+        <p className="pl-8 w-75 uppercase mt-18 text-sm md:text-sm md:w-90">
           Skinstric developed an A.I. that creates a highly-personalised routine
           tailored to what your skin needs.
         </p>
