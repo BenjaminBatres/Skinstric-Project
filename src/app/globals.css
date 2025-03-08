@@ -20,9 +20,12 @@ body {
   font-family: 'RoobertTRAIL', Georgia, 'Times New Roman', Times, serif;
 }
 
+
 html {
   overflow-x: hidden;
 }
+
+
 
 .title {
   color: #1a1b1c;
@@ -32,15 +35,6 @@ html {
   line-height: 0.945;
   letter-spacing: -.07em;
   text-align: center;
-}
-
-.bottom-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  width: 95%;
-  margin: 0 auto;
-  justify-items: self-start;
-  margin-top: 48px;
 }
 
 .btn {

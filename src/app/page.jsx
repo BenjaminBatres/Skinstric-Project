@@ -11,7 +11,7 @@ export default function Home() {
         />
         <img
           src={"/images/Rectangle 2778.png"}
-          className="w-70 xl:hidden"
+          className="w-45 xl:hidden"
           alt="left-rectangle"
         />
         <span className="absolute left-8">
@@ -25,13 +25,13 @@ export default function Home() {
           </Link>
         </span>
         <img
-          className="w-90 absolute xl:w-auto xl:relative z-10 "
+          className="w-55 absolute xl:w-auto xl:relative z-10 "
           src={"/images/Sophisticated skincare.png"}
           alt="title"
           draggable="false"
         />
 
-        <button className="mt-48 absolute cursor-pointer uppercase font-bold text-xs flex items-center xl:hidden z-100">
+        <button className="mt-40 absolute cursor-pointer uppercase font-bold text-xs flex items-center xl:hidden z-100">
           <span className="pr-1">Enter experience</span>
           <span>
             <svg
@@ -48,7 +48,7 @@ export default function Home() {
         </button>
         <img
           src={"/images/Rectangle 2779.png"}
-          className="w-70 relative xl:hidden"
+          className="w-45 relative xl:hidden"
           alt="right-rectangle"
         />
         <img

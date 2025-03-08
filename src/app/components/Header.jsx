@@ -5,13 +5,13 @@ import React from "react";
 export default function Header() {
   return (
     <>
-      <header className="max-w-1920px w-[100%] h-[64px] p-8 flex justify-between items-center">
+      <header className="max-w-[1920px] w-[100%] p-4 h-[64px] flex justify-between items-center">
         <div className="flex">
           <Link href={"/"}>
-            <span className="font-bold text-sm uppercase block">Skinstric</span>
+            <span className="font-bold text-sm uppercase block ">Skinstric</span>
           </Link>
           <Image
-            className="pl-3"
+            className="pl-3 hidden sm:block"
             src={"/images/location.png"}
             width={75}
             height={0}
