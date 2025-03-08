@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="flex h-[80vh] justify-center xl:justify-between items-center relative">
+      <div className="flex h-[50vh] justify-center xl:justify-between items-center relative">
         <img
           src={"/images/Rectangle 2779.png"}
           className="w-70 hidden xl:block"
