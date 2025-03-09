@@ -65,15 +65,13 @@ export default function Home() {
         >
           <span
             className="pr-1"
-            data-aos="fade-up"
-            data-aos-duration="1200"
+            data-aos="fade-in"
             data-aos-delay="350"
           >
             Enter experience
           </span>
           <span
-            data-aos="fade-up"
-            data-aos-duration="1200"
+            data-aos="fade-in"
             data-aos-delay="350"
           >
             <svg
