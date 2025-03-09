@@ -1,31 +1,40 @@
 @import "tailwindcss";
 
-
 /* @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 } */
 
 @font-face {
-  font-family: 'Roobert';
-  src: url('./Fonts/RoobertTRIAL-Regular.woff') format('woff'), url('./Fonts/RoobertTRIAL-Regular.woff2') format('woff2');
+  font-family: "Roobert";
+  src: url("./Fonts/RoobertTRIAL-Regular.woff") format("woff"),
+    url("./Fonts/RoobertTRIAL-Regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'RoobertTRAIL';
-  src: url("./Fonts/RoobertTRIAL-Regular.woff") format('woff'), url("./Fonts/RoobertTRIAL-Regular.woff2");
+  font-family: "RoobertTRAIL";
+  src: url("./Fonts/RoobertTRIAL-Regular.woff") format("woff"),
+    url("./Fonts/RoobertTRIAL-Regular.woff2");
 }
 
 body {
-  font-family: 'RoobertTRAIL', Georgia, 'Times New Roman', Times, serif;
+  font-family: "RoobertTRAIL", Georgia, "Times New Roman", Times, serif;
 }
-
 
 html {
   overflow-x: hidden;
 }
 
-
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .title {
   color: #1a1b1c;
@@ -33,13 +42,82 @@ html {
   display: inline-block;
   will-change: transform;
   line-height: 0.945;
-  letter-spacing: -.07em;
+  letter-spacing: -0.07em;
   text-align: center;
 }
 
 .btn {
-  background-color: #1A1B1C;
+  background-color: #1a1b1c;
   padding: 8px 16px;
   color: #fff;
   cursor: not-allowed;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  justify-content: space-between;
+  visibility: hidden;
+}
+.modal--open .modal {
+  z-index: 60;
+  visibility: visible;
+}
+
+.modal__half {
+  transition: all 800ms  ease-out;
+}
+
+.modal__rightArrow > span {
+  display: inline-block;
+  transition: transform 0.5s ease-in-out;
+}
+
+.modal__rightArrow > span:hover {
+  transform: translateX(10%);
+}
+
+.modal--open .modal__rightArrow,
+.modal--open .modal__leftArrow {
+  transform: translateX(0%);
+}
+
+.modal__rightArrow {
+  transform: translateX(-35%);
+}
+
+.modal__leftArrow {
+  transform: translateX(35%);
+}
+
+#logo__title--section {
+  opacity: 1;
+  visibility: visible;
+  transition: all 600ms;
+  background-color: #fff;
+  z-index: 100;
+}
+
+.modal--open #logo__title--section {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 600ms;
+  transform: translateY(50px);
+  background-color: #fff;
+}
+
+/* .modal__leftArrow,
+.modal__rightArrow {
+  width: 700px;
+  height: auto;
+} */
+
+#description {
+  opacity: 0;
+  animation: fade-up 900ms 300ms ease-out forwards
 }
