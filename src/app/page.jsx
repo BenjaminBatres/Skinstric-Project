@@ -195,10 +195,7 @@ export default function Home() {
                 transform: isHovered ? "translateX(-200px)" : "translateX(0)",
               }}
             >
-              <Link
-                href={"/introduction"}
-                className="cursor-not-allowed opacity-40"
-              >
+              <Link href={""} className="cursor-not-allowed opacity-40">
                 <img
                   src={"/images/button-icon-text-shrunk (1).png"}
                   alt="right-button"
@@ -230,34 +227,38 @@ export default function Home() {
               </button>
             </Link>
           </span>
-          <div
-            className="top-0"
-            style={{
-              display: "inline-block",
-              position: "absolute",
-              zIndex: "-1",
-              transition: "transform 600ms ease-in-out",
-              transform: isHovered ? "translateX(-80px)" : "translateX(450px)",
-            }}
-          >
-            <img src="/images/rombuses.png" alt="" />
-          </div>
-          <div
-            className="top-[43%] w-28 sm:w-auto sm:top-[43%] -right-[1px] sm:right-[55px]"
-            style={{
-              position: "absolute",
-              zIndex: -1,
-              transition: "transform 600ms ease-in-out",
-              opacity: isHovered ? "1" : "0",
-              transform: isHovered ? "translate(-50px)" : "translate(0)",
-            }}
-          >
-            <img
-              src="/images/button-icon-text-expanded.png"
-              className="button-icon-text-expanded"
-              alt=""
-            />
-          </div>
+          <Link href={"/introduction"}>
+            <div
+              className="top-0"
+              style={{
+                display: "inline-block",
+                position: "absolute",
+                zIndex: "-1",
+                transition: "transform 600ms ease-in-out",
+                transform: isHovered
+                  ? "translateX(-80px)"
+                  : "translateX(450px)",
+              }}
+            >
+              <img src="/images/rombuses.png" alt="" />
+            </div>
+            <div
+              className="top-[43%] w-28 sm:w-auto sm:top-[43%] -right-[1px] sm:right-[55px]"
+              style={{
+                position: "absolute",
+                zIndex: -1,
+                transition: "transform 600ms ease-in-out",
+                opacity: isHovered ? "1" : "0",
+                transform: isHovered ? "translate(-50px)" : "translate(0)",
+              }}
+            >
+              <img
+                src="/images/button-icon-text-expanded.png"
+                className="button-icon-text-expanded"
+                alt=""
+              />
+            </div>
+          </Link>
         </div>
       </div>
 
