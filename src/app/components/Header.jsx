@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <>
       <header
-        className="max-w-[1920px] w-[100%] p-8 h-[64px] flex justify-between items-center"
+        className="max-w-[1920px] w-[100%] sm:p-8 pl-4 h-[64px] flex justify-between items-center"
         id="header"
         data-aos="fade-in"
         data-aos-duration="1000"
@@ -33,7 +33,6 @@ export default function Header() {
             draggable="false"
           ></Image>
         </div>
-        <button className="btn text-sm">Enter Code</button>
       </header>
     </>
   );

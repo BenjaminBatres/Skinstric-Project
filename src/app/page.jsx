@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import BottomPara from "./components/BottomPara";
 export default function Home() {
   function displayIconBtns() {
     document.body.classList += " modal--open moving-element";
@@ -19,6 +20,7 @@ export default function Home() {
 
   return (
     <>
+      <button className="btn text-sm absolute top-3 right-8 z-1000">Enter Code</button>
       <section
         className="flex h-[55vh] sm:h-[80vh] justify-center xl:justify-between items-center relative"
         id="logo__title--section"
@@ -188,20 +190,18 @@ export default function Home() {
           >
             <img src="/images/Rectangle 2779.png" alt="" />
           </div>
-          <span className="absolute right-[25%] top-[46%] w-25 sm:w-auto cursor-pointer">
+          <span className="absolute right-[25%] top-[46%] w-25 sm:w-auto cursor-not-allowed opacity-40">
             <div
               style={{
                 transition: "transform 0.3s ease-in-out",
                 transform: isHovered ? "translateX(-200px)" : "translateX(0)",
               }}
             >
-              <Link href={""} className="cursor-not-allowed opacity-40">
-                <img
-                  src={"/images/button-icon-text-shrunk (1).png"}
-                  alt="right-button"
-                  draggable="false"
-                />
-              </Link>
+              <img
+                src={"/images/button-icon-text-shrunk (1).png"}
+                alt="right-button"
+                draggable="false"
+              />
             </div>
           </span>
         </div>
@@ -243,13 +243,13 @@ export default function Home() {
               <img src="/images/rombuses.png" alt="" />
             </div>
             <div
-              className="top-[43%] w-28 sm:w-auto sm:top-[43%] -right-[1px] sm:right-[55px]"
+              className="top-[43%] w-28 sm:w-auto sm:top-[43%] right-[25px] sm:right-[55px]"
               style={{
                 position: "absolute",
                 zIndex: -1,
                 transition: "transform 600ms ease-in-out",
                 opacity: isHovered ? "1" : "0",
-                transform: isHovered ? "translate(-50px)" : "translate(0)",
+                transform: isHovered ? "translate(-40px)" : "translate(0)",
               }}
             >
               <img
@@ -262,15 +262,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="absolute top-[75%] sm:top-[87%]">
-        <p
-          className="pl-8 w-75 uppercase mt-18 sm:mt-0 text-sm md:text-sm md:w-90"
-          id="description"
-        >
-          Skinstric developed an A.I. that creates a highly-personalised routine
-          tailored to what your skin needs.
-        </p>
-      </div>
+      <BottomPara />
     </>
   );
 }
