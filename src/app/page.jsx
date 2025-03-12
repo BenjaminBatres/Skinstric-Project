@@ -73,6 +73,7 @@ export default function Home() {
           className="absolute text-center tracking-[-.07em] leading-[0.945] xl:relative"
           data-aos="fade-up"
           data-aos-delay="350"
+          data-aos-duration="1000"
         >
           <span
             style={{
@@ -97,7 +98,7 @@ export default function Home() {
 
         <button
           onClick={displayIconBtns}
-          className="mt-40 sm:mt-50 absolute cursor-pointer uppercase font-bold text-xs flex items-center xl:hidden z-100"
+          className="mt-40 sm:mt-50 absolute cursor-pointer uppercase font-bold text-[9px] flex items-center xl:hidden z-100"
         >
           <span className="pr-1" data-aos="fade-in" data-aos-delay="350">
             Enter experience
