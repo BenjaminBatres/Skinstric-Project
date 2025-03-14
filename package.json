@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.6",
     "@tailwindcss/vite": "^4.0.9",
     "aos": "^3.0.0-beta.6",
     "bootstrap": "^5.3.3",
