@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import BottomPara from "./components/BottomPara";
+import Header from "./components/Header";
 export default function Home() {
   function displayIconBtns() {
     document.body.classList += " modal--open moving-element";
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <>
+    <Header />
       <button className="btn text-sm absolute top-3 right-8 z-1000">Enter Code</button>
       <section
         className="flex h-[55vh] sm:h-[80vh] justify-center xl:justify-between items-center relative"

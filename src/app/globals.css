@@ -25,6 +25,16 @@ html {
   overflow-x: hidden;
 }
 
+:root {
+  --scrollbar-width: 2px;
+  --offset-x: 32px;
+  --grid-columns: 8;
+  --grid-gap: 0px;
+  --grid-column-width: calc((100vw - var(--scrollbar-width, 0px) - var(--offset-x)* 2) / var(--grid-columns) - var(--grid-gap)*((var(--grid-columns) - 1) / var(--grid-columns)));
+  --size: 176px;
+}
+
+
 @keyframes fade-up {
   0% {
     opacity: 0;
@@ -145,4 +155,36 @@ input:focus::placeholder {
 
 input:focus + .label {
   opacity: 0;
+}
+
+.demographics-left {
+  flex-shrink: 0;
+  width: calc(var(--grid-column-width)* 1 + var(--grid-gap)* 0);
+}
+
+.ai-result-diagram {
+  letter-spacing: -.05em;
+  line-height: 1;
+  position: relative;
+  width: var(--size, 120px);
+}
+
+.ai-confidence-diagram {
+  --size: 20vw;
+  margin-left: auto;
+  margin-top: auto;
+}
+
+.ai-result-diagram-svg {
+  height: auto;
+  overflow: visible;
+  width: 100%;
+  will-change: transform;
+}
+
+.demographics-race-confidence {
+  background-color: #f3f3f4;
+  flex-shrink: 0;
+  margin-left: 16px;
+  width: calc(var(--grid-column-width)* 2 + var(--grid-gap)* 1);
 }

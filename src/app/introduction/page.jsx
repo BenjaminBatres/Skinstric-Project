@@ -3,6 +3,7 @@ import Link from "next/link";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
+import Header from "../components/Header";
 
 const IntroPage = () => {
   const [step, setStep] = useState(1);
@@ -49,12 +50,15 @@ const IntroPage = () => {
     }
   };
 
+
+
   useEffect(() => {
     AOS.init({ easing: "ease" });
   });
 
   return (
     <>
+    <Header />
       <h3
         className="pl-4 sm:pl-8 pt-4 uppercase font-black text-[12px] sm:text-[16px]"
         data-aos="fade-in"

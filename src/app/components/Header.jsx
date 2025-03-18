@@ -25,7 +25,7 @@ export default function Header() {
             </span>
           </Link>
           <Image
-            className="pl-3 hidden sm:block"
+            className="pl-3"
             src={"/images/location.png"}
             width={75}
             height={0}
