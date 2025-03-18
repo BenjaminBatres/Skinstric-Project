@@ -67,7 +67,7 @@ export default function page() {
         To start anaysis
       </h3>
       <div
-        className="flex flex-col justify-around mt-20 items-center gap-4 sm:flex-row sm:mt-30"
+        className="flex flex-col justify-around mt-0 items-center gap-0 sm:gap-4 sm:flex-row sm:mt-30"
         data-aos="fade-in"
         data-aos-delay="800"
       >
@@ -100,7 +100,7 @@ export default function page() {
 
       <button
         onClick={handleUpload}
-        className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer absolute left-[30%] top-[75%] sm:left-[45%] sm:top-[92%]"
+        className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer absolute left-[35%] top-[83%] text-xs sm:left-[45%] sm:top-[92%]"
       >
         Upload Image
       </button>
