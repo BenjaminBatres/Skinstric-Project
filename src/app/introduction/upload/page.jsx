@@ -2,7 +2,7 @@
 
 import Header from "@/app/components/Header";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
@@ -47,6 +47,10 @@ export default function page() {
       );
 
       const data = await response.json();
+      localStorage.setItem("apiResult", JSON.stringify(data));
+      // const storedData = JSON.parse(localStorage.getItem("apiResult"));
+      // setAPIResults(storedData.data)
+
       setResponseMessage(`Uploaded Complete!`);
       if (data) {
         setIsProcceed(true);
@@ -55,6 +59,9 @@ export default function page() {
       setResponseMessage(`Error: ${error.message}`);
     }
   };
+
+  
+
 
   return (
     <>
@@ -94,13 +101,15 @@ export default function page() {
 
       {/* Response Message */}
 
-      <div className="absolute top-[85%] left-[25%] sm:top-[87%] sm:left-[44.5%]">
+      <div className="absolute top-[79%] left-[25%] sm:top-[87%] sm:left-[44.5%]">
         {responseMessage}
       </div>
+      <div>
+  </div>
 
       <button
         onClick={handleUpload}
-        className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer absolute left-[35%] top-[83%] text-xs sm:left-[45%] sm:top-[92%]"
+        className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer absolute left-[35%] top-[83%] text-xs sm:text-base sm:left-[45%] sm:top-[92%]"
       >
         Upload Image
       </button>
