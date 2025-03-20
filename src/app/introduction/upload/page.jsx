@@ -127,8 +127,8 @@ export default function page() {
       <Link
         href={"/analysis"}
         style={{
-          opacity: isProcceed ? "1" : "0",
-          transition: "opacity 300ms ease-in-out",
+          visibility: isProcceed ? "visible" : "hidden",
+          transition: "visibility 300ms ease-in-out",
         }}
         className="absolute bottom-8 right-8"
       >
