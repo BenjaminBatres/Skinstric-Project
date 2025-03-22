@@ -5,6 +5,12 @@
   --font-mono: var(--font-geist-mono);
 } */
 
+@theme {
+  --breakpoint-xs: 33rem;
+  --breakpoint-2xl: 100rem;
+  --breakpoint-3xl: 120rem;
+}
+
 @font-face {
   font-family: "Roobert";
   src: url("./Fonts/RoobertTRIAL-Regular.woff") format("woff"),
@@ -21,19 +27,24 @@ body {
   font-family: "RoobertTRAIL", Georgia, "Times New Roman", Times, serif;
 }
 
+
+/* 
 html {
-  overflow-x: hidden;
-}
+  overflow-y: hidden;
+} */
 
 :root {
   --scrollbar-width: 2px;
   --offset-x: 32px;
   --grid-columns: 8;
   --grid-gap: 0px;
-  --grid-column-width: calc((100vw - var(--scrollbar-width, 0px) - var(--offset-x)* 2) / var(--grid-columns) - var(--grid-gap)*((var(--grid-columns) - 1) / var(--grid-columns)));
+  --grid-column-width: calc(
+    (100vw - var(--scrollbar-width, 0px) - var(--offset-x) * 2) /
+      var(--grid-columns) - var(--grid-gap) *
+      ((var(--grid-columns) - 1) / var(--grid-columns))
+  );
   --size: 176px;
 }
-
 
 @keyframes fade-up {
   0% {
@@ -48,6 +59,12 @@ html {
 
 h1 {
   font-size: clamp(48px, 2px + 6.5625vw, 128px);
+}
+
+.demographics-title {
+  font-size: clamp(40px, -24px + 5vw, 72px);
+  letter-spacing: -0.06em;
+  line-height: 1;
 }
 
 .btn {
@@ -117,11 +134,6 @@ h1 {
   left: 50%;
 }
 
-@media (max-width: 450px) {
-  .rombuse {
-    transform: translate(20%, -10%);
-  }
-}
 
 input {
   background-color: none;
@@ -159,14 +171,41 @@ input:focus + .label {
 
 .demographics-left {
   flex-shrink: 0;
-  width: calc(var(--grid-column-width)* 1 + var(--grid-gap)* 0);
+  width: calc(var(--grid-column-width) * 1 + var(--grid-gap) * 0);
 }
 
-.ai-result-diagram {
-  letter-spacing: -.05em;
+.analysis-pick-line {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+.analysis-pick-button-diagram {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  display: none;
+}
+
+.demographics-right {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding-left: 16px;
+}
+
+.ai-result-diagram,
+.ai-result-diagram--modal {
+  font-size: clamp(32px, 16px + 1.25vw, 40px);
+  letter-spacing: -0.05em;
   line-height: 1;
   position: relative;
   width: var(--size, 120px);
+}
+
+.ai-result-diagram--modal {
+  display: none;
 }
 
 .ai-confidence-diagram {
@@ -186,7 +225,11 @@ input:focus + .label {
   background-color: #f3f3f4;
   flex-shrink: 0;
   margin-left: 16px;
-  width: calc(var(--grid-column-width)* 2 + var(--grid-gap)* 1);
+  width: calc(var(--grid-column-width) * 2 + var(--grid-gap) * 1);
+}
+
+.demographic__modal--btn {
+  display: none;
 }
 
 circle {
@@ -195,4 +238,70 @@ circle {
 
 svg {
   transform: rotate(-90deg);
+}
+@media (max-width: 1024px) {
+  .demographics-left {
+    width: calc(var(--grid-column-width) * 3 + var(--grid-gap) * 1);
+  }
+  
+  .demographics-race-confidence {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+  
+  .demographics-right {
+    display: none;
+  }
+  
+  .analysis-pick-line {
+    flex-direction: row;
+    margin-bottom: 29px;
+    justify-content: space-between;
+  }
+  
+  .analysis-pick-button-diagram {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .demographics-title {
+    font-size: clamp(28px, 13.7142857143px + 4.4642857143vw, 48px);
+  }
+}
+
+@media (max-width: 528px) {
+  .demographics-left {
+    width: 100%;
+  }
+  
+  .demographics-race-confidence {
+    display: none;
+  }
+  
+  .demographic__modal--btn {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+  }
+
+  .ai-result-diagram {
+    display: none;
+  }
+
+  .ai-result-diagram--modal {
+    display: block;
+  }
+}
+
+@media (max-width: 450px) {
+  .rombuse {
+    transform: translate(20%, -10%);
+  }
 }

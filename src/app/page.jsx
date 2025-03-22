@@ -21,8 +21,15 @@ export default function Home() {
 
   return (
     <>
-    <Header />
-      <button className="btn text-sm absolute top-3 right-8 z-1000">Enter Code</button>
+      <Header />
+      <button
+        className="btn text-sm absolute top-3 right-8 z-1000"
+        data-aos="fade-in"
+        data-aos-duration="1000"
+        data-aos-delay="50"
+      >
+        Enter Code
+      </button>
       <section
         className="flex h-[55vh] sm:h-[80vh] justify-center xl:justify-between items-center relative"
         id="logo__title--section"
@@ -44,7 +51,7 @@ export default function Home() {
 
         <img
           src={"/images/Rectangle 2778.png"}
-          className="w-50 sm:w-70  xl:hidden"
+          className="w-50 sm:w-70 xl:hidden"
           data-aos="fade-in"
           data-aos-delay="350"
           alt="left-rectangle"
@@ -133,7 +140,7 @@ export default function Home() {
           alt="right-rectangle"
         />
 
-        <span className="absolute right-8 hidden xl:block ">
+        <span className="absolute right-8 hidden xl:block">
           <Link href={"/introduction"}>
             <button
               onMouseEnter={() => setIsHovered(true)}
