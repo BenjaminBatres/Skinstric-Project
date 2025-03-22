@@ -17,6 +17,7 @@ const IntroPage = () => {
     "Los Angeles, USA",
     "London, UK",
     "Tokyo, Japan",
+    "San Antonio, USA",
   ];
 
   const handleNameChange = (e) => {
@@ -50,15 +51,13 @@ const IntroPage = () => {
     }
   };
 
-
-
   useEffect(() => {
     AOS.init({ easing: "ease" });
   });
 
   return (
     <>
-    <Header />
+      <Header />
       <h3
         className="pl-4 sm:pl-8 pt-4 uppercase font-black text-[12px] sm:text-[16px]"
         data-aos="fade-in"
@@ -141,7 +140,7 @@ const IntroPage = () => {
       </div>
       <Link
         href={"/"}
-        className="absolute w-20 md:w-auto  bottom-16 sm:bottom-8  left-4 sm:left-8 back__btn"
+        className="absolute w-[30%] md:w-auto  bottom-16 sm:bottom-8  left-4 sm:left-8 back__btn"
       >
         <img src="/images/button-icon-back-shrunk.png" alt="" />
       </Link>
@@ -151,7 +150,7 @@ const IntroPage = () => {
           opacity: location ? 1 : 0,
           transition: "opacity 300ms ease-in-out",
         }}
-        className="absolute w-25 md:w-auto bottom-16 sm:bottom-8 right-4 sm:right-8"
+        className="absolute w-[40%] md:w-auto bottom-16 sm:bottom-8 right-[0px] sm:right-8"
       >
         <img src="/images/button-icon-proceed-shrunk.png" alt="" />
       </Link>

@@ -202,7 +202,7 @@ export default function page() {
         </div>
       </header>
       <h3
-        className="font-bold uppercase pt-8 text-xs"
+        className="font-bold uppercase pt-4 sm:pt-8 text-xs"
         data-aos="fade-in"
         data-aos-delay="1100"
       >
@@ -211,7 +211,7 @@ export default function page() {
       <h2 className="demographics-title uppercase">Demograhics</h2>
       <h3 className="uppercase text-xs">Predicted race & age</h3>
 
-      <main className="flex flex-auto mt-[20px] sm:mt-[50px] lg:mt-[90px] pb-[80px]">
+      <main className="flex flex-auto mt-[20px] sm:mt-[50px] lg:mt-[90px] pb-[35px]">
         <div className="demographics-left">
           <ul className="text-bold">
             <li className="mb-[8px] relative">
@@ -223,7 +223,7 @@ export default function page() {
                 }`}
                 onClick={() => handleSelection(1, "race")}
               >
-                <div className="analysis-pick-line">
+                <div className="analysis-pick-line font-bold">
                   <span className="uppercase mb-[32px]">East asian</span>
                   <span className="uppercase">Race</span>
                 </div>
@@ -333,7 +333,7 @@ export default function page() {
                 onClick={() => setIsOpen(!isOpen)}
               ></button>
               {isOpen ? (
-                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-10 sm:hidden">
+                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-11 sm:hidden">
                   <div className="pt-[15px] pb-[18px] pl-[8px]">
                     <button
                       className="cursor-pointer"
@@ -528,7 +528,7 @@ export default function page() {
                 }`}
                 onClick={() => handleSelection(2, "age")}
               >
-                <div className="analysis-pick-line">
+                <div className="analysis-pick-line font-bold">
                   <span className="uppercase mb-[32px]">20-29</span>
                   <span className="uppercase">Age</span>
                 </div>
@@ -637,7 +637,7 @@ export default function page() {
                 className="demographic__modal--btn"
               ></button>
               {isAgeOpen ? (
-                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-10 sm:hidden">
+                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-12 sm:hidden">
                   <div className="pt-[15px] pb-[18px] pl-[8px]">
                     <button
                       className="cursor-pointer"
@@ -834,7 +834,7 @@ export default function page() {
                 }`}
                 onClick={() => handleSelection(3, "gender")}
               >
-                <div className="analysis-pick-line">
+                <div className="analysis-pick-line font-bold">
                   <span className="uppercase mb-[32px]">Female</span>
                   <span className="uppercase">Sex</span>
                 </div>
@@ -1456,6 +1456,29 @@ export default function page() {
           </div>
         )}
       </main>
+      <div className="bottom--demographic__box">
+        <button
+          onClick={() => window.history.back()}
+          className="cursor-pointer"
+        >
+          <img
+            src="/images/button-icon-back-shrunk.png"
+            className="w-[90px] sm:w-auto"
+            alt=""
+          />
+        </button>
+        <p className="text-[#A0A4AB]">
+          If A.I. estimate is wrong, select the correct one.
+        </p>
+        <div className="right-8 bottom-[16px] text-xs">
+          <button className="mr-[8px] pt-[9px] pr-[16px] pb-[10px] pl-[16px] border-1 uppercase cursor-pointer">
+            Reset
+          </button>
+          <button className="pt-[9px] pr-[16px] pb-[10px] pl-[16px] bg-[#1a1b1c] text-[#f3f3f4] uppercase cursor-not-allowed">
+            Confirm
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,12 +2,13 @@
 
 import Header from "@/app/components/Header";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isProcceed, setIsProcceed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
 
   // Convert image to Base64
   const handleImageUpload = (e) => {
@@ -34,6 +35,8 @@ export default function page() {
       return;
     }
 
+    setIsLoading(true); // Start loading
+
     try {
       const response = await fetch(
         "https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo",
@@ -48,8 +51,6 @@ export default function page() {
 
       const data = await response.json();
       localStorage.setItem("apiResult", JSON.stringify(data));
-      // const storedData = JSON.parse(localStorage.getItem("apiResult"));
-      // setAPIResults(storedData.data)
 
       setResponseMessage(`Uploaded Complete!`);
       if (data) {
@@ -57,11 +58,10 @@ export default function page() {
       }
     } catch (error) {
       setResponseMessage(`Error: ${error.message}`);
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
-
-  
-
 
   return (
     <>
@@ -99,20 +99,25 @@ export default function page() {
         />
       </div>
 
-      {/* Response Message */}
-
-      <div className="absolute top-[79%] left-[25%] sm:top-[87%] sm:left-[44.5%]">
-        {responseMessage}
+      <div className="flex justify-center flex-col items-center mt-6 sm:mt-12">
+        <p className="mb-[8px]">
+          {/* Show Loading Spinner if isLoading is true inside responseMessage */}
+          {isLoading ? (
+            <div className="flex items-center">
+              <div className="spinner-border animate-spin h-6 w-6 border-4 border-t-transparent border-[#1a1b1c] rounded-full mr-2"></div>
+              <span>Uploading...</span>
+            </div>
+          ) : (
+            <span>{responseMessage}</span>
+          )}
+        </p>
+        <button
+          onClick={handleUpload}
+          className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
+        >
+          Upload Image
+        </button>
       </div>
-      <div>
-  </div>
-
-      <button
-        onClick={handleUpload}
-        className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer absolute left-[35%] top-[83%] text-xs sm:text-base sm:left-[45%] sm:top-[92%]"
-      >
-        Upload Image
-      </button>
 
       <button
         onClick={() => window.history.back()}

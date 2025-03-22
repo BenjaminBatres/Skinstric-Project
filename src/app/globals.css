@@ -27,11 +27,9 @@ body {
   font-family: "RoobertTRAIL", Georgia, "Times New Roman", Times, serif;
 }
 
-
-/* 
 html {
-  overflow-y: hidden;
-} */
+  overflow-x: hidden;
+}
 
 :root {
   --scrollbar-width: 2px;
@@ -134,7 +132,6 @@ h1 {
   left: 50%;
 }
 
-
 input {
   background-color: none;
   outline: none;
@@ -204,6 +201,11 @@ input:focus + .label {
   width: var(--size, 120px);
 }
 
+.ai-result-diagram > svg,
+.ai-result-diagram--modal > svg {
+  transform: rotate(-90deg);
+}
+
 .ai-result-diagram--modal {
   display: none;
 }
@@ -236,31 +238,38 @@ circle {
   transition: stroke-dashoffset 0.5s ease-in-out;
 }
 
-svg {
-  transform: rotate(-90deg);
+.bottom--demographic__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 @media (max-width: 1024px) {
   .demographics-left {
     width: calc(var(--grid-column-width) * 3 + var(--grid-gap) * 1);
   }
-  
+
   .demographics-race-confidence {
     width: 100%;
     flex: 1 1 auto;
   }
-  
+
   .demographics-right {
     display: none;
   }
-  
+
   .analysis-pick-line {
     flex-direction: row;
     margin-bottom: 29px;
     justify-content: space-between;
   }
-  
+
   .analysis-pick-button-diagram {
     display: flex;
+  }
+
+  .bottom--demographic__box {
+    margin-bottom: 24px;
   }
 }
 
@@ -270,15 +279,21 @@ svg {
   }
 }
 
+@media (max-width: 730px) {
+  .bottom--demographic__box > p {
+    display: none;
+  }
+}
+
 @media (max-width: 528px) {
   .demographics-left {
     width: 100%;
   }
-  
+
   .demographics-race-confidence {
     display: none;
   }
-  
+
   .demographic__modal--btn {
     display: block;
     position: absolute;

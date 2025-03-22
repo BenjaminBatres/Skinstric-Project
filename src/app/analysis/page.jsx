@@ -86,7 +86,7 @@ export default function page() {
           >
             <img
               src="/images/button-icon-back-shrunk.png"
-              className="w-[90px] sm:w-auto"
+              className="w-[85px]"
               alt=""
             />
           </button>
@@ -100,7 +100,7 @@ export default function page() {
           >
             <img
               src="/images/button-icon-summary-shrunk.png"
-              className="w-[110px] h-auto sm:w-auto"
+              className="w-32"
               alt=""
             />
           </Link>
