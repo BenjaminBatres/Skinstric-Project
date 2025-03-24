@@ -9,6 +9,8 @@ const IntroPage = () => {
   const [step, setStep] = useState(1);
   const [isFocused, setIsFocused] = useState(false);
   const [name, setName] = useState("");
+  const [error, setError] = useState(""); // Error message state
+  const [errorLocation, setErrorLocation] = useState(""); // Error message state
   const [location, setLocation] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
 
@@ -20,8 +22,44 @@ const IntroPage = () => {
     "San Antonio, USA",
   ];
 
+  const validateName = (input) => {
+    const nameRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
+    if (input.length < 3) {
+      setError("*Name must be at least 3 characters.*");
+      return false;
+    }
+    if (!nameRegex.test(input)) {
+      setError("Name can only contain letters and spaces.");
+      return false;
+    }
+    setError(""); // Clear error if valid
+    return true;
+  };
+
+  const validateLocation = (input) => {
+    const locationRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
+    if (input.length < 3) {
+      setErrorLocation("*Location must be at least 3 characters.*");
+      return false;
+    }
+    if (!locationRegex.test(input)) {
+      setErrorLocation("Location can only contain letters and spaces.");
+      return false;
+    }
+    setErrorLocation(""); // Clear error if valid
+    return true;
+  };
+
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    const inputValue = e.target.value;
+    setName(inputValue);
+    validateName(inputValue); // Validate input on change
+  };
+
+  const handleLocationChange = (e) => {
+    const inputValue = e.target.value;
+    setLocation(inputValue);
+    validateLocation(inputValue); // Validate input on change
   };
 
   const handleChange = (e) => {
@@ -72,36 +110,42 @@ const IntroPage = () => {
       >
         <img src="/images/rombuses (1).png" alt="" />
         <div className="absolute text-center -mt-5">
-          {step === 1 ? (
-            <>
+          {step === 1 && (
+            <div>
               <h3 className="text-zinc-400 uppercase mb-2 text-xs">
                 {isFocused ? "Introduce yourself" : "click to type"}
               </h3>
               <input
-                className="size-10/15"
+                className="w-2/3 h-6 sm:h-9 md:h-13 lg:h-15"
                 type="text"
                 placeholder="Introduce Yourself"
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                onKeyDown={handleKeyPress}
+                // onKeyDown={handleKeyPress}
                 value={name}
                 onChange={handleNameChange}
               />
-            </>
-          ) : (
-            <>
+              {error && <p className="text-[#1a1b1c] text-sm">{error}</p>}
+            </div>
+          )}
+          {step === 2 && (
+            <div>
               <h3 className="text-zinc-400 uppercase mb-2 text-xs">
                 {isFocused ? "Where are you from?" : "click to type"}
               </h3>
               <input
-                className="w-50 sm:w-70 md:w-80 lg:w-125"
+                className="w-[80%] h-6 sm:h-9 md:h-13 lg:h-15"
                 type="text"
                 placeholder="Where are you from?"
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 value={location}
-                onChange={handleChange}
+                onChange={handleLocationChange}
               />
+              {errorLocation && (
+                <p className="text-red-500 text-sm">{errorLocation}</p>
+              )}{" "}
+              {/* Show error */}
               {filteredOptions.length > 0 && (
                 <ul
                   style={{
@@ -134,7 +178,7 @@ const IntroPage = () => {
                   ))}
                 </ul>
               )}
-            </>
+            </div>
           )}
         </div>
       </div>
@@ -144,16 +188,30 @@ const IntroPage = () => {
       >
         <img src="/images/button-icon-back-shrunk.png" alt="" />
       </Link>
-      <Link
-        href={"/introduction/upload"}
-        style={{
-          opacity: location ? 1 : 0,
-          transition: "opacity 300ms ease-in-out",
-        }}
-        className="absolute w-[40%] md:w-auto bottom-16 sm:bottom-8 right-[0px] sm:right-8"
-      >
-        <img src="/images/button-icon-proceed-shrunk.png" alt="" />
-      </Link>
+      {step === 1 && (
+        <div>
+          {name && !error && (
+            <button
+              onClick={() => setStep(2)}
+              className="absolute bottom-8 right-8  cursor-pointer"
+            >
+              <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+            </button>
+          )}
+        </div>
+      )}
+      {step === 2 && (
+        <>
+          {location && !errorLocation &&(
+              <Link
+                href={"/introduction/upload"}
+                className="absolute w-[40%] md:w-auto bottom-16 sm:bottom-8 right-[0px] sm:right-8"
+              >
+                <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+              </Link>
+            )}
+        </>
+      )}
     </>
   );
 };

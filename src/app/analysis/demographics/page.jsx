@@ -211,7 +211,7 @@ export default function page() {
       <h2 className="demographics-title uppercase">Demograhics</h2>
       <h3 className="uppercase text-xs">Predicted race & age</h3>
 
-      <main className="flex flex-auto mt-[20px] sm:mt-[50px] lg:mt-[90px] pb-[35px]">
+      <main className="flex flex-auto mt-[20px] sm:mt-[50px] lg:mt-[90px] pb-[80px]">
         <div className="demographics-left">
           <ul className="text-bold">
             <li className="mb-[8px] relative">
@@ -1457,8 +1457,8 @@ export default function page() {
         )}
       </main>
       <div className="bottom--demographic__box">
-        <button
-          onClick={() => window.history.back()}
+        <Link href={"/introduction/upload"}
+          
           className="cursor-pointer"
         >
           <img
@@ -1466,12 +1466,12 @@ export default function page() {
             className="w-[90px] sm:w-auto"
             alt=""
           />
-        </button>
+        </Link>
         <p className="text-[#A0A4AB]">
           If A.I. estimate is wrong, select the correct one.
         </p>
         <div className="right-8 bottom-[16px] text-xs">
-          <button className="mr-[8px] pt-[9px] pr-[16px] pb-[10px] pl-[16px] border-1 uppercase cursor-pointer">
+          <button className="mr-[8px] pt-[9px] pr-[16px] pb-[10px] pl-[16px] border-1 uppercase cursor-not-allowed">
             Reset
           </button>
           <button className="pt-[9px] pr-[16px] pb-[10px] pl-[16px] bg-[#1a1b1c] text-[#f3f3f4] uppercase cursor-not-allowed">

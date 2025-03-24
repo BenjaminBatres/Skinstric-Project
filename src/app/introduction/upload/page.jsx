@@ -2,13 +2,16 @@
 
 import Header from "@/app/components/Header";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isProcceed, setIsProcceed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [cameraAllowed, setCameraAllowed] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const videoRef = useRef(null);
 
   // Convert image to Base64
   const handleImageUpload = (e) => {
@@ -63,6 +66,20 @@ export default function page() {
     }
   };
 
+  const handleCameraAccess = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setCameraAllowed(true);
+      setErrorMessage("");
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      setErrorMessage("Camera access denied. Please allow access.");
+      console.error("Error accessing camera:", error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -78,11 +95,17 @@ export default function page() {
         data-aos="fade-in"
         data-aos-delay="800"
       >
-        <img
-          src="/images/camera.png"
-          className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]"
-          alt="Camera"
-        />
+        {!cameraAllowed && (
+        <div className="flex flex-col items-center">
+          <img src='/images/camera.png'
+            onClick={handleCameraAccess}
+            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-lg flex items-center  cursor-pointer transition"
+          >
+          </img>
+            <span>ALLOW A.I. TO ACCESS YOUR CAMERA</span>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        </div>
+      )}
         <label htmlFor="file-upload" className="cursor-pointer">
           <img
             src={base64Image || "/images/gallery.png"}
@@ -100,7 +123,7 @@ export default function page() {
       </div>
 
       <div className="flex justify-center flex-col items-center mt-6 sm:mt-12">
-        <p className="mb-[8px]">
+        <div className="mb-[8px]">
           {/* Show Loading Spinner if isLoading is true inside responseMessage */}
           {isLoading ? (
             <div className="flex items-center">
@@ -110,8 +133,10 @@ export default function page() {
           ) : (
             <span>{responseMessage}</span>
           )}
-        </p>
+        </div>
         <button
+          data-aos="fade-in"
+          data-aos-delay="800"
           onClick={handleUpload}
           className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
         >
@@ -119,8 +144,8 @@ export default function page() {
         </button>
       </div>
 
-      <button
-        onClick={() => window.history.back()}
+      <Link
+        href={"/introduction"}
         className="absolute left-8 bottom-8 cursor-pointer"
       >
         <img
@@ -128,7 +153,7 @@ export default function page() {
           className="w-[90px] sm:w-auto"
           alt=""
         />
-      </button>
+      </Link>
       <Link
         href={"/analysis"}
         style={{

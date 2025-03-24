@@ -137,9 +137,7 @@ input {
   outline: none;
   font-size: clamp(16px, 12px + 2.5vw, 60px);
   letter-spacing: -0.07em;
-  z-index: 1000;
   text-align: center;
-  line-height: 1.1;
   border-bottom: 1px solid #1a1b1c;
 }
 
@@ -242,6 +240,7 @@ circle {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 36px 0px;
 }
 
 @media (max-width: 1024px) {

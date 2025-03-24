@@ -163,19 +163,6 @@ export default function Home() {
         <div
           style={{
             position: "absolute",
-            top: "-2.5%",
-            right: "-450px",
-            zIndex: "-1",
-
-            transition: "transform 600ms ease-in-out",
-            transform: isHovered ? "translateX(-500px)" : "translateX(0)",
-          }}
-        >
-          <img src="/images/rombuses.png" className="hidden xl:block" alt="" />
-        </div>
-        <div
-          style={{
-            position: "absolute",
             right: "33px",
             zIndex: -1,
             transition: "transform 600ms ease-in-out",
@@ -235,20 +222,6 @@ export default function Home() {
             </Link>
           </span>
           <Link href={"/introduction"}>
-            <div
-              className="top-0"
-              style={{
-                display: "inline-block",
-                position: "absolute",
-                zIndex: "-1",
-                transition: "transform 600ms ease-in-out",
-                transform: isHovered
-                  ? "translateX(-80px)"
-                  : "translateX(450px)",
-              }}
-            >
-              <img src="/images/rombuses.png" alt="" />
-            </div>
             <div
               className="top-[44%] w-[45%] sm:w-auto sm:top-[43%] right-[30%] sm:right-[55px]"
               style={{
