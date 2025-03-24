@@ -1,11 +1,11 @@
-"use client"; 
+"use client";
 
 import { Camera, Diamond } from "lucide-react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-export default function Page() { 
+export default function Page() {
   const router = useRouter();
   const videoRef = useRef(null);
   const [state, setState] = useState({
@@ -40,9 +40,14 @@ export default function Page() {
       if (state.hasPermission === false) {
         router.push("/");
       } else if (state.hasPermission === true) {
-        if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
+        if (
+          typeof navigator !== "undefined" &&
+          navigator.mediaDevices?.getUserMedia
+        ) {
           try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const stream = await navigator.mediaDevices.getUserMedia({
+              video: true,
+            });
             setState((prev) => ({ ...prev, videoStream: stream }));
             if (videoRef.current) videoRef.current.srcObject = stream;
           } catch (error) {
@@ -136,26 +141,60 @@ export default function Page() {
     </div>
   );
 
-  
+  const handleCaptureImage = useCallback(() => {
+    setState((prev) => ({ ...prev, flashActive: true }));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob((blob) => {
+      new Compressor(blob, {
+        quality: 0.6,
+        maxWidth: 800,
+        maxHeight: 800,
+        success: (compressedBlob) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            localStorage.setItem("capturedImage", reader.result);
+            setState((prev) => ({
+              ...prev,
+              flashActive: false,
+              isLoading: false,
+              toast: {
+                title: "Capture Successful",
+                description: "Your face has been captured successfully!",
+                variant: "default",
+              },
+            }));
+            setTimeout(() => router.push("/result"), 2000);
+          };
+          reader.readAsDataURL(compressedBlob);
+        },
+        error: (err) => console.error("Compression error:", err),
+      });
+    }, "image/png");
+  }, [router]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-white">
-        {state.hasPermission === null && renderPermissionRequest()}
-        {state.hasPermission === true && renderCameraInterface()}
-        {state.hasPermission === false && (
-          <div className="text-center">
-            <h1 className="text-xl font-semibold">Permission Denied</h1>
-            <p className="mt-4 text-sm">You have denied camera access.</p>
-          </div>
-        )}
+      {state.hasPermission === null && renderPermissionRequest()}
+      {state.hasPermission === true && renderCameraInterface()}
+      {state.hasPermission === false && (
+        <div className="text-center">
+          <h1 className="text-xl font-semibold">Permission Denied</h1>
+          <p className="mt-4 text-sm">You have denied camera access.</p>
+        </div>
+      )}
 
-        {state.isLoading && (
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
-            <div className="text-white text-3xl">Processing...</div>
-          </div>
-        )}
-
-        
-      </div>
+      {state.isLoading && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
+          <div className="text-white text-3xl">Processing...</div>
+        </div>
+      )}
+    </div>
   );
 }
