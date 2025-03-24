@@ -1,9 +1,9 @@
 "use client";
 
+import Compressor from "compressorjs";
 import { Camera, Diamond } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 
 export default function Page() {
     const router = useRouter();
@@ -100,7 +100,7 @@ export default function Page() {
                   variant: "default",
                 },
               }));
-              setTimeout(() => router.push("/result"), 2000);
+              setTimeout(() => router.push("/introduction/upload"), 2000);
             };
             reader.readAsDataURL(compressedBlob);
           },
