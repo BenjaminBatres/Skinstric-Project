@@ -2,16 +2,15 @@
 
 import Header from "@/app/components/Header";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import ScrollReveal from "scrollreveal";
 
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
   const [isProcceed, setIsProcceed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [cameraAllowed, setCameraAllowed] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const videoRef = useRef(null);
+  const [capturedImage, setCapturedImage] = useState(null);
 
   // Convert image to Base64
   const handleImageUpload = (e) => {
@@ -66,19 +65,12 @@ export default function page() {
     }
   };
 
-  const handleCameraAccess = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setCameraAllowed(true);
-      setErrorMessage("");
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (error) {
-      setErrorMessage("Camera access denied. Please allow access.");
-      console.error("Error accessing camera:", error);
-    }
-  };
+  useEffect(() => {
+    ScrollReveal().reveal(".upload--btn", { delay: 900 });
+    ScrollReveal().reveal(".back--btn", { delay: 900 });
+    setCapturedImage(capturedImage);
+    localStorage.getItem("capturedImage", capturedImage);
+  }, []);
 
   return (
     <>
@@ -95,17 +87,15 @@ export default function page() {
         data-aos="fade-in"
         data-aos-delay="800"
       >
-        {!cameraAllowed && (
         <div className="flex flex-col items-center">
-          <img src='/images/camera.png'
-            onClick={handleCameraAccess}
-            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-lg flex items-center  cursor-pointer transition"
-          >
-          </img>
-            <span>ALLOW A.I. TO ACCESS YOUR CAMERA</span>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <Link href={"/scan"}>
+            <img
+              src={capturedImage || "/images/camera.png"}
+              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-lg flex items-center  cursor-pointer transition"
+            ></img>
+          </Link>
         </div>
-      )}
+
         <label htmlFor="file-upload" className="cursor-pointer">
           <img
             src={base64Image || "/images/gallery.png"}
@@ -128,25 +118,25 @@ export default function page() {
           {isLoading ? (
             <div className="flex items-center">
               <div className="spinner-border animate-spin h-6 w-6 border-4 border-t-transparent border-[#1a1b1c] rounded-full mr-2"></div>
-              <span>Uploading...</span>
+              <span className="text-xs sm:text-base">Uploading...</span>
             </div>
           ) : (
-            <span>{responseMessage}</span>
+            <span className="text-xs sm:text-base">{responseMessage}</span>
           )}
         </div>
-        <button
-          data-aos="fade-in"
-          data-aos-delay="800"
-          onClick={handleUpload}
-          className="px-4 py-2 bg-[#1a1b1c] text-white rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
-        >
-          Upload Image
-        </button>
+        <div className="upload--btn">
+          <button
+            onClick={handleUpload}
+            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
+          >
+            Upload Image
+          </button>
+        </div>
       </div>
 
       <Link
         href={"/introduction"}
-        className="absolute left-8 bottom-8 cursor-pointer"
+        className="absolute left-8 bottom-8 cursor-pointer back--btn"
       >
         <img
           src="/images/button-icon-back-shrunk.png"

@@ -62,15 +62,6 @@ const IntroPage = () => {
     validateLocation(inputValue); // Validate input on change
   };
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setLocation(value);
-    setFilteredOptions(
-      locationOptions.filter((loc) =>
-        loc.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-  };
 
   const handleSelect = (selectedLocation) => {
     setLocation(selectedLocation);
@@ -193,7 +184,7 @@ const IntroPage = () => {
           {name && !error && (
             <button
               onClick={() => setStep(2)}
-              className="absolute bottom-8 right-8  cursor-pointer"
+              className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8 cursor-pointer"
             >
               <img src="/images/button-icon-proceed-shrunk.png" alt="" />
             </button>
@@ -205,7 +196,7 @@ const IntroPage = () => {
           {location && !errorLocation &&(
               <Link
                 href={"/introduction/upload"}
-                className="absolute w-[40%] md:w-auto bottom-16 sm:bottom-8 right-[0px] sm:right-8"
+                className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8"
               >
                 <img src="/images/button-icon-proceed-shrunk.png" alt="" />
               </Link>

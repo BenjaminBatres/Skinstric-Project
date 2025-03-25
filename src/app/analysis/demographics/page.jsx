@@ -163,6 +163,8 @@ export default function page() {
 
   useEffect(() => {
     const storedData = localStorage.getItem("apiResult");
+    const storedCapturedData = localStorage.getItem("capturedImage")
+    console.log(storedCapturedData)
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
