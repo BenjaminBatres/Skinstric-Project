@@ -68,8 +68,9 @@ export default function page() {
   useEffect(() => {
     // ScrollReveal().reveal(".upload--btn", { delay: 900 });
     // ScrollReveal().reveal(".back--btn", { delay: 900 });
-    setCapturedImage(capturedImage);
-    localStorage.getItem("capturedImage", capturedImage);
+    const storedCapturedData =  localStorage.getItem("capturedImage");
+   console.log(storedCapturedData)
+    
   }, []);
 
   return (
