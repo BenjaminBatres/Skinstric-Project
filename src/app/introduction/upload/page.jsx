@@ -70,6 +70,11 @@ export default function page() {
     // ScrollReveal().reveal(".back--btn", { delay: 900 });
     const storedCapturedData =  localStorage.getItem("capturedImage");
    console.log(storedCapturedData)
+   if (storedCapturedData) {
+    setCapturedImage(storedCapturedData)
+   } else {
+    setCapturedImage(null)
+   }
     
   }, []);
 
