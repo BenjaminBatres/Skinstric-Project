@@ -68,8 +68,6 @@ export default function page() {
   useEffect(() => {
     ScrollReveal().reveal(".upload--btn", { delay: 900 });
     ScrollReveal().reveal(".back--btn", { delay: 900 });
-    // setCapturedImage(capturedImage);
-    // localStorage.getItem("capturedImage", capturedImage);
   }, []);
 
   return (
@@ -90,7 +88,7 @@ export default function page() {
         <div className="flex flex-col items-center">
           <Link href={"/scan"}>
             <img
-              src={capturedImage || "/images/camera.png"}
+              src={"/images/camera.png"}
               className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-lg flex items-center  cursor-pointer transition"
             ></img>
           </Link>
