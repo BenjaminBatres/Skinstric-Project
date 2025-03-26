@@ -17,6 +17,7 @@ export default function Home() {
     AOS.init({
       easing: "ease",
     });
+    localStorage.removeItem("capturedImage")
   }, []);
 
   return (

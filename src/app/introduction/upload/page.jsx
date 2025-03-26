@@ -3,14 +3,17 @@
 import Header from "@/app/components/Header";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-// import ScrollReveal from "scrollreveal";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const [isImage, setIsImage] = useState(false)
+  const [isCapturedImage, setIsCapturedImage] = useState(false)
   const [isProcceed, setIsProcceed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const router = useRouter();
 
   // Convert image to Base64
   const handleImageUpload = (e) => {
@@ -27,18 +30,16 @@ export default function page() {
       reader.onerror = (error) => {
         console.error("Error converting to Base64:", error);
       };
+      setIsImage(true)
     }
+
+
   };
 
   // Send Base64 string to API
-  const handleUpload = async () => {
-    if (!base64Image) {
-      setResponseMessage("*Please select an image first.*");
-      return;
-    }
-
+  const handleUpload = async () => {    
     setIsLoading(true); // Start loading
-
+    
     try {
       const response = await fetch(
         "https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo",
@@ -50,10 +51,10 @@ export default function page() {
           body: JSON.stringify({ image: base64Image }), // Send image as Base64 string
         }
       );
-
+      
       const data = await response.json();
       localStorage.setItem("apiResult", JSON.stringify(data));
-
+      
       setResponseMessage(`Uploaded Complete!`);
       if (data) {
         setIsProcceed(true);
@@ -64,10 +65,43 @@ export default function page() {
       setIsLoading(false); // Stop loading
     }
   };
+  
+  const handleProcessImage = async () => {
+    if (!capturedImage) return;
+    
+    setIsLoading(true);
+    setIsCapturedImage(true)
+    
+    try {
+      const response = await fetch(
+        "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image: capturedImage }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      localStorage.setItem("capturedImage", JSON.stringify(result));
+
+      setApiMessage("Processing complete!");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      router.push("/analysis");
+    } catch (error) {
+      console.error("Error processing image:", error);
+      setApiMessage("An error occurred during processing.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // ScrollReveal().reveal(".upload--btn", { delay: 900 });
-    // ScrollReveal().reveal(".back--btn", { delay: 900 });
     const storedCapturedData =  localStorage.getItem("capturedImage");
    console.log(storedCapturedData)
    if (storedCapturedData) {
@@ -132,7 +166,23 @@ export default function page() {
         </div>
         <div className="upload--btn">
           <button
+          style={{
+            visibility: isImage ? 'visible' : 'hidden',
+            transition: "visibility 300ms ease-in-out"
+          }}
             onClick={handleUpload}
+            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
+          >
+            Upload Image
+          </button>
+        </div>
+        <div className="upload--btn">
+          <button
+          style={{
+            visibility: isCapturedImage ? 'visible' : 'hidden',
+            transition: "visibility 300ms ease-in-out"
+          }}
+            onClick={handleProcessImage}
             className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
           >
             Upload Image
