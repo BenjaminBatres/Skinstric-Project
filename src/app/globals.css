@@ -5,12 +5,6 @@
   --font-mono: var(--font-geist-mono);
 } */
 
-@theme {
-  --breakpoint-xs: 33rem;
-  --breakpoint-2xl: 100rem;
-  --breakpoint-3xl: 120rem;
-}
-
 @font-face {
   font-family: "Roobert";
   src: url("./Fonts/RoobertTRIAL-Regular.woff") format("woff"),
@@ -27,10 +21,6 @@ body {
   font-family: "RoobertTRAIL", Georgia, "Times New Roman", Times, serif;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 :root {
   --scrollbar-width: 2px;
   --offset-x: 32px;
@@ -38,18 +28,18 @@ html {
   --grid-gap: 0px;
   --grid-column-width: calc(
     (100vw - var(--scrollbar-width, 0px) - var(--offset-x) * 2) /
-      var(--grid-columns) - var(--grid-gap) *
-      ((var(--grid-columns) - 1) / var(--grid-columns))
-  );
-  --size: 176px;
-}
-
-@keyframes fade-up {
-  0% {
-    opacity: 0;
-    transform: translateY(50px);
+    var(--grid-columns) - var(--grid-gap) *
+    ((var(--grid-columns) - 1) / var(--grid-columns))
+    );
+    --size: 176px;
   }
-  100% {
+  
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -64,24 +54,15 @@ html {
   }
 }
 
+.scroll--hidden {
+  overflow-y: hidden;
+}
+
 h1 {
   font-size: clamp(48px, 2px + 6.5625vw, 128px);
 }
 
-.demographics-title {
-  font-size: clamp(40px, -24px + 5vw, 72px);
-  letter-spacing: -0.06em;
-  line-height: 1;
-}
-
-.btn {
-  background-color: #1a1b1c;
-  padding: 8px 16px;
-  color: #fff;
-  cursor: not-allowed;
-}
-
-
+/* Landing page */
 .modal {
   position: absolute;
   top: 50%;
@@ -93,6 +74,7 @@ h1 {
   justify-content: space-between;
   visibility: hidden;
 }
+
 .modal--open .modal {
   z-index: 60;
   visibility: visible;
@@ -131,17 +113,18 @@ h1 {
   background-color: #fff;
 }
 
+.demographics-title {
+  font-size: clamp(40px, -24px + 5vw, 72px);
+  letter-spacing: -0.06em;
+  line-height: 1;
+}
 
-#description,
-.back__btn {
+#fade-up {
   opacity: 0;
   animation: fade-up 900ms 300ms ease-out forwards;
 }
 
-.rombuse {
-  top: -80px;
-  left: 50%;
-}
+/* Introduction */
 
 input {
   background-color: none;
@@ -174,6 +157,8 @@ input:focus::placeholder {
 input:focus + .label {
   opacity: 0;
 }
+
+/* Demographics */
 
 .demographics-left {
   flex-shrink: 0;
@@ -322,11 +307,5 @@ circle {
 
   .ai-result-diagram--modal {
     display: block;
-  }
-}
-
-@media (max-width: 450px) {
-  .rombuse {
-    transform: translate(20%, -10%);
   }
 }

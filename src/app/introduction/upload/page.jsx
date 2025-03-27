@@ -8,10 +8,12 @@ import { useRouter } from "next/navigation";
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-  const [isImage, setIsImage] = useState(false)
-  const [isCapturedImage, setIsCapturedImage] = useState(false)
+  const [responseUploadMessage, setResponseUploadMessage] = useState("");
+  const [isImage, setIsImage] = useState(false);
+  const [isCapturedImage, setIsCapturedImage] = useState(false);
   const [isProcceed, setIsProcceed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
   const router = useRouter();
 
@@ -30,16 +32,15 @@ export default function page() {
       reader.onerror = (error) => {
         console.error("Error converting to Base64:", error);
       };
-      setIsImage(true)
+      setIsImage(true);
     }
-
-
   };
 
   // Send Base64 string to API
-  const handleUpload = async () => {    
+  const handleUpload = async () => {
     setIsLoading(true); // Start loading
-    
+    setIsImage(false);
+
     try {
       const response = await fetch(
         "https://us-central1-frontend-simplified.cloudfunctions.net/skinstricPhaseTwo",
@@ -51,10 +52,10 @@ export default function page() {
           body: JSON.stringify({ image: base64Image }), // Send image as Base64 string
         }
       );
-      
+
       const data = await response.json();
       localStorage.setItem("apiResult", JSON.stringify(data));
-      
+
       setResponseMessage(`Uploaded Complete!`);
       if (data) {
         setIsProcceed(true);
@@ -65,13 +66,12 @@ export default function page() {
       setIsLoading(false); // Stop loading
     }
   };
-  
   const handleProcessImage = async () => {
     if (!capturedImage) return;
-    
-    setIsLoading(true);
-    setIsCapturedImage(true)
-    
+
+    setIsCapturedImage(false);
+    setIsUploading(true);
+
     try {
       const response = await fetch(
         "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseTwo",
@@ -89,27 +89,27 @@ export default function page() {
       const result = await response.json();
       localStorage.setItem("capturedImage", JSON.stringify(result));
 
-      setApiMessage("Processing complete!");
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       router.push("/analysis");
+      setResponseUploadMessage("Uploaded Complete");
     } catch (error) {
+      setResponseUploadMessage(`Error: ${error.message}`);
       console.error("Error processing image:", error);
-      setApiMessage("An error occurred during processing.");
     } finally {
-      setIsLoading(false);
+      setIsUploading(false);
     }
   };
 
   useEffect(() => {
-    const storedCapturedData =  localStorage.getItem("capturedImage");
-   console.log(storedCapturedData)
-   if (storedCapturedData) {
-    setCapturedImage(storedCapturedData)
-   } else {
-    setCapturedImage(null)
-   }
-    
+    const storedCapturedData = localStorage.getItem("capturedImage");
+
+    if (storedCapturedData) {
+      setCapturedImage(storedCapturedData);
+      setIsCapturedImage(true);
+    } else {
+      setCapturedImage(null);
+    }
   }, []);
 
   return (
@@ -131,17 +131,65 @@ export default function page() {
           <Link href={"/scan"}>
             <img
               src={capturedImage || "/images/camera.png"}
-              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-lg flex items-center  cursor-pointer transition"
+              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-[30%] flex items-center cursor-pointer transition"
             ></img>
           </Link>
+          <div className="mb-[8px] mt-5">
+            {isUploading ? (
+              <div className="flex items-center">
+                <div className="spinner-border animate-spin h-6 w-6 border-4 border-t-transparent border-[#1a1b1c] rounded-full mr-2"></div>
+                <span className="text-xs sm:text-base">Uploading...</span>
+              </div>
+            ) : (
+              <span className="text-xs sm:text-base">
+                {responseUploadMessage}
+              </span>
+            )}
+          </div>
+          <button
+            style={{
+              visibility: isCapturedImage ? "visible" : "hidden",
+              transition: "visibility 300ms ease-in-out",
+            }}
+            onClick={handleProcessImage}
+            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
+          >
+            Upload Image
+          </button>
         </div>
 
-        <label htmlFor="file-upload" className="cursor-pointer">
+        <label
+          htmlFor="file-upload"
+          className="cursor-pointer flex flex-col items-center"
+        >
           <img
             src={base64Image || "/images/gallery.png"}
-            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] rounded-[30%] object-cover"
+            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] rounded-[30%] object-cover mt-2 sm:mt-0"
             alt="Gallery"
           />
+
+          <div className="mb-[8px] mt-5">
+            {isLoading ? (
+              <div className="flex items-center ">
+                <div className="spinner-border animate-spin h-6 w-6 border-4 border-t-transparent border-[#1a1b1c] rounded-full mr-2"></div>
+                <span className="text-xs sm:text-base">Uploading...</span>
+              </div>
+            ) : (
+              <span className="text-xs sm:text-base mt-10">
+                {responseMessage}
+              </span>
+            )}
+          </div>
+          <button
+            style={{
+              visibility: isImage ? "visible" : "hidden",
+              transition: "visibility 300ms ease-in-out",
+            }}
+            onClick={handleUpload}
+            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer "
+          >
+            Upload Images
+          </button>
         </label>
         <input
           type="file"
@@ -152,47 +200,10 @@ export default function page() {
         />
       </div>
 
-      <div className="flex justify-center flex-col items-center mt-6 sm:mt-12">
-        <div className="mb-[8px]">
-          {/* Show Loading Spinner if isLoading is true inside responseMessage */}
-          {isLoading ? (
-            <div className="flex items-center">
-              <div className="spinner-border animate-spin h-6 w-6 border-4 border-t-transparent border-[#1a1b1c] rounded-full mr-2"></div>
-              <span className="text-xs sm:text-base">Uploading...</span>
-            </div>
-          ) : (
-            <span className="text-xs sm:text-base">{responseMessage}</span>
-          )}
-        </div>
-        <div className="upload--btn">
-          <button
-          style={{
-            visibility: isImage ? 'visible' : 'hidden',
-            transition: "visibility 300ms ease-in-out"
-          }}
-            onClick={handleUpload}
-            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
-          >
-            Upload Image
-          </button>
-        </div>
-        <div className="upload--btn">
-          <button
-          style={{
-            visibility: isCapturedImage ? 'visible' : 'hidden',
-            transition: "visibility 300ms ease-in-out"
-          }}
-            onClick={handleProcessImage}
-            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
-          >
-            Upload Image
-          </button>
-        </div>
-      </div>
-
       <Link
         href={"/introduction"}
-        className="absolute left-8 bottom-8 cursor-pointer back--btn"
+        className="absolute left-8 bottom-8 cursor-pointer"
+        id="fade-up"
       >
         <img
           src="/images/button-icon-back-shrunk.png"

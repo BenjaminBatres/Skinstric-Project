@@ -7,6 +7,10 @@ export default function page() {
   const [isLoading, setLoading] = useState(false);
   const [isProcceed, setIsProcceed] = useState(false);
 
+  const handleDeleteCapturedImage = () => {
+    localStorage.removeItem("capturedImage");
+  };
+
   const handleOnClick = () => {
     setIsProcceed(true);
   };
@@ -29,7 +33,6 @@ export default function page() {
             id="header"
             data-aos="fade-in"
             data-aos-delay="700"
-
           >
             <div className="flex">
               <Link href={"/"}>
@@ -80,8 +83,9 @@ export default function page() {
             </button>
           </div>
 
-          <button
-            onClick={() => window.history.back()}
+          <Link
+            href={"/introduction/upload"}
+            onClick={handleDeleteCapturedImage}
             className="absolute left-8 bottom-8 cursor-pointer"
           >
             <img
@@ -89,7 +93,7 @@ export default function page() {
               className="w-[85px]"
               alt=""
             />
-          </button>
+          </Link>
           <Link
             href={"/analysis/demographics"}
             style={{

@@ -30,7 +30,7 @@ export default function Page() {
   useEffect(() => {
     const handlePermissionChange = async () => {
       if (state.hasPermission === false) {
-        router.push("/");
+        router.push("/introduction/upload");
       } else if (state.hasPermission === true) {
         if (
           typeof navigator !== "undefined" &&
@@ -125,7 +125,9 @@ export default function Page() {
   const renderPermissionRequest = () => (
     <div className="text-center">
       <h1 className="font-semibold">Allow Camera Access</h1>
-      <p className="mt-4 text-base md:text-2xl">Please allow the camera to scan your face.</p>
+      <p className="mt-4 text-base md:text-2xl">
+        Please allow the camera to scan your face.
+      </p>
       <div className="flex gap-4 mt-6 justify-center">
         <button
           className="px-4 py-2 cursor-pointer bg-[#1A1B1C] text-white rounded-md"
@@ -162,7 +164,7 @@ export default function Page() {
       </button>
 
       {state.isCapturing && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[#1A1B1C]">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[white]">
           {state.countdown}
         </div>
       )}

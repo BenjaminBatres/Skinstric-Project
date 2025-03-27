@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import BottomPara from "./components/BottomPara";
+
 import Header from "./components/Header";
 export default function Home() {
   function displayIconBtns() {
@@ -24,7 +24,7 @@ export default function Home() {
     <>
       <Header />
       <button
-        className="btn text-sm absolute top-3 right-8 z-1000"
+        className="pt-[8px] pr-[16px] pb-[8px] pl-[16px] cursor-not-allowed text-white bg-[#1a1b1c] text-sm absolute top-3 right-8 z-1000"
         data-aos="fade-in"
         data-aos-duration="1000"
         data-aos-delay="50"
@@ -141,7 +141,8 @@ export default function Home() {
           alt="right-rectangle"
         />
 
-        <span className="absolute right-8 hidden xl:block">
+        <span className="absolute right-8 hidden xl:block" data-aos="fade-in"
+          data-aos-delay="350">
           <Link
               href="/introduction"
               className="relative inline-block transition-transform duration-300"
@@ -243,7 +244,15 @@ export default function Home() {
         </div>
       </div>
 
-      <BottomPara />
+      <div className="absolute top-[75%] sm:top-[87%]">
+      <p
+        className="pl-8 w-75 uppercase mt-18 sm:mt-0 text-sm md:text-sm md:w-90"
+        id="fade-up"
+      >
+        Skinstric developed an A.I. that creates a highly-personalised routine
+        tailored to what your skin needs.
+      </p>
+    </div>
     </>
   );
 }

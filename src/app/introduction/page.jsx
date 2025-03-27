@@ -12,15 +12,6 @@ const IntroPage = () => {
   const [error, setError] = useState(""); // Error message state
   const [errorLocation, setErrorLocation] = useState(""); // Error message state
   const [location, setLocation] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState([]);
-
-  const locationOptions = [
-    "New York, USA",
-    "Los Angeles, USA",
-    "London, UK",
-    "Tokyo, Japan",
-    "San Antonio, USA",
-  ];
 
   const validateName = (input) => {
     const nameRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
@@ -62,12 +53,6 @@ const IntroPage = () => {
     validateLocation(inputValue); // Validate input on change
   };
 
-
-  const handleSelect = (selectedLocation) => {
-    setLocation(selectedLocation);
-    setFilteredOptions([]);
-  };
-
   const goToNextStep = () => {
     if (step === 1 && name.trim() !== "") {
       setStep(2);
@@ -82,6 +67,7 @@ const IntroPage = () => {
 
   useEffect(() => {
     AOS.init({ easing: "ease" });
+    localStorage.removeItem("capturedImage");
   });
 
   return (
@@ -100,6 +86,7 @@ const IntroPage = () => {
         data-aos-delay="800"
       >
         <img src="/images/rombuses (1).png" alt="" />
+        {/* Introduce yourself input*/}
         <div className="absolute text-center -mt-5">
           {step === 1 && (
             <div>
@@ -112,13 +99,15 @@ const IntroPage = () => {
                 placeholder="Introduce Yourself"
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                // onKeyDown={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 value={name}
                 onChange={handleNameChange}
               />
+              {/* Show error */}
               {error && <p className="text-[#1a1b1c] text-sm">{error}</p>}
             </div>
           )}
+          {/* Where are you from input */}
           {step === 2 && (
             <div>
               <h3 className="text-zinc-400 uppercase mb-2 text-xs">
@@ -133,54 +122,24 @@ const IntroPage = () => {
                 value={location}
                 onChange={handleLocationChange}
               />
-              {errorLocation && (
-                <p className="text-red-500 text-sm">{errorLocation}</p>
-              )}{" "}
               {/* Show error */}
-              {filteredOptions.length > 0 && (
-                <ul
-                  style={{
-                    listStyle: "none",
-                    padding: 0,
-                    margin: "5px 0 0",
-                    position: "absolute",
-                    width: "100%",
-                    backgroundColor: "#fff",
-                    border: "1px solid #ddd",
-                    borderRadius: "5px",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                    maxHeight: "150px",
-                    overflowY: "auto",
-                    zIndex: 1000,
-                  }}
-                >
-                  {filteredOptions.map((option) => (
-                    <li
-                      key={option}
-                      onClick={() => handleSelect(option)}
-                      style={{
-                        padding: "10px",
-                        cursor: "pointer",
-                        borderBottom: "1px solid #eee",
-                      }}
-                    >
-                      {option}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {errorLocation && (
+                <p className="text-[#1a1b1c] text-sm">{errorLocation}</p>
+              )}{" "}
             </div>
           )}
         </div>
       </div>
       <Link
         href={"/"}
-        className="absolute w-[30%] md:w-auto  bottom-16 sm:bottom-8  left-4 sm:left-8 back__btn"
+        className="absolute w-[30%] md:w-auto  bottom-16 sm:bottom-8  left-4 sm:left-8"
+        id="fade-up"
       >
         <img src="/images/button-icon-back-shrunk.png" alt="" />
       </Link>
+      {/* Procceed to the next input */}
       {step === 1 && (
-        <div>
+        <>
           {name && !error && (
             <button
               onClick={() => setStep(2)}
@@ -189,18 +148,19 @@ const IntroPage = () => {
               <img src="/images/button-icon-proceed-shrunk.png" alt="" />
             </button>
           )}
-        </div>
+        </>
       )}
+      {/* Procceed to the next page */}
       {step === 2 && (
         <>
-          {location && !errorLocation &&(
-              <Link
-                href={"/introduction/upload"}
-                className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8"
-              >
-                <img src="/images/button-icon-proceed-shrunk.png" alt="" />
-              </Link>
-            )}
+          {location && !errorLocation && (
+            <Link
+              href={"/introduction/upload"}
+              className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8"
+            >
+              <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+            </Link>
+          )}
         </>
       )}
     </>

@@ -12,6 +12,36 @@ export default function page() {
   const [isAgeOpen, setIsAgeOpen] = useState(false);
   const [isGenderOpen, setIsGenderOpen] = useState(false);
 
+  function toggleRaceModal() {
+    if (isOpen) {
+      setIsOpen(false);
+      return document.body.classList.remove("scroll--hidden");
+    }
+    // toggle Race modal
+    setIsOpen(true);
+    document.body.classList += " scroll--hidden";
+  }
+
+  function toggleAgeModal() {
+    if (isAgeOpen) {
+      setIsAgeOpen(false);
+      return document.body.classList.remove("scroll--hidden");
+    }
+    // toggle Age modal
+    setIsAgeOpen(true);
+    document.body.classList += " scroll--hidden";
+  }
+
+  function toggleGenderModal() {
+    if (isGenderOpen) {
+      setIsGenderOpen(false);
+      return document.body.classList.remove("scroll--hidden");
+    }
+    // toggle Gender modal
+    setIsGenderOpen(true);
+    document.body.classList += " scroll--hidden";
+  }
+
   const handleSelection = (boxIndex, category) => {
     setActiveBox(boxIndex); // Update active box state
 
@@ -161,17 +191,37 @@ export default function page() {
     progressText.textContent = `${percentage}%`;
   }
 
+  const handleDeleteCapturedImage = () => {
+    localStorage.removeItem("capturedImage");
+  };
+
   useEffect(() => {
     const storedData = localStorage.getItem("apiResult");
-    const storedCapturedData = localStorage.getItem("capturedImage")
-    console.log(storedCapturedData)
+    const storedCapturedData = localStorage.getItem("capturedImage");
 
     if (storedData) {
-      const parsedData = JSON.parse(storedData);
+      const parsedData = JSON.parse(storedData); // Sets the data into an object
+      const onMountRace = parsedData.data.race["east asian"];
+      const onMountAge = parsedData.data.age["3-9"];
+      const onMountSex = parsedData.data.gender.female;
+      setAPIResults(parsedData); 
+      // Mounts the progress circle
+      updateProgress(Math.round(onMountRace * 100)); 
+      updateProgressRace(Math.round(onMountRace * 100));
+      updateProgressAge(Math.round(onMountAge * 100));
+      updateProgressSex(Math.round(onMountSex * 100));
+      updateProgressRaceModal(Math.round(onMountRace * 100));
+      updateProgressAgeModal(Math.round(onMountAge * 100));
+      updateProgressSexModal(Math.round(onMountSex * 100));
+    }
+
+    if (storedCapturedData) {
+      const parsedData = JSON.parse(storedCapturedData); // Sets the data into an object
       const onMountRace = parsedData.data.race["east asian"];
       const onMountAge = parsedData.data.age["3-9"];
       const onMountSex = parsedData.data.gender.female;
       setAPIResults(parsedData);
+      // Mounts the progress circle
       updateProgress(Math.round(onMountRace * 100));
       updateProgressRace(Math.round(onMountRace * 100));
       updateProgressAge(Math.round(onMountAge * 100));
@@ -231,6 +281,7 @@ export default function page() {
                 </div>
 
                 <div className="analysis-pick-button-diagram">
+                  {/* Progress Circle */}
                   <div className="ai-result-diagram">
                     <svg
                       width="100"
@@ -277,6 +328,7 @@ export default function page() {
                       )}
                     </span>
                   </div>
+                  {/* Mobile Progress Circle */}
                   <div className="ai-result-diagram--modal">
                     <svg
                       width="100"
@@ -332,14 +384,14 @@ export default function page() {
               {/* Race Modal */}
               <button
                 className="demographic__modal--btn"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={toggleRaceModal}
               ></button>
               {isOpen ? (
-                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-11 sm:hidden">
+                <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-hidden fixed bg-[#f3f3f4] z-11 sm:hidden">
                   <div className="pt-[15px] pb-[18px] pl-[8px]">
                     <button
                       className="cursor-pointer"
-                      onClick={() => setIsOpen(false)}
+                      onClick={toggleRaceModal}
                     >
                       <img src="/images/button-icon-back-shrunk.png" alt="" />
                     </button>
@@ -536,6 +588,7 @@ export default function page() {
                 </div>
 
                 <div className="analysis-pick-button-diagram">
+                  {/* Progress Circle */}
                   <div className="ai-result-diagram">
                     <svg
                       width="100"
@@ -582,6 +635,7 @@ export default function page() {
                       )}
                     </span>
                   </div>
+                  {/* Mobile Prpgress Circle */}
                   <div className="ai-result-diagram--modal">
                     <svg
                       width="100"
@@ -635,16 +689,13 @@ export default function page() {
               </button>
               {/* Age Modal */}
               <button
-                onClick={() => setIsAgeOpen(!isAgeOpen)}
+                onClick={toggleAgeModal}
                 className="demographic__modal--btn"
               ></button>
               {isAgeOpen ? (
                 <div className="h-[100%] w-[100%] left-0 top-0 overflow-y-auto fixed bg-[#f3f3f4] z-12 sm:hidden">
                   <div className="pt-[15px] pb-[18px] pl-[8px]">
-                    <button
-                      className="cursor-pointer"
-                      onClick={() => setIsAgeOpen(!isAgeOpen)}
-                    >
+                    <button className="cursor-pointer" onClick={toggleAgeModal}>
                       <img src="/images/button-icon-back-shrunk.png" alt="" />
                     </button>
                   </div>
@@ -842,6 +893,7 @@ export default function page() {
                 </div>
 
                 <div className="analysis-pick-button-diagram">
+                  {/*Progress Circle */}
                   <div className="ai-result-diagram">
                     <svg
                       width="100"
@@ -888,6 +940,7 @@ export default function page() {
                       )}
                     </span>
                   </div>
+                  {/* Mobile Progress Circle */}
                   <div className="ai-result-diagram--modal">
                     <svg
                       width="100"
@@ -941,7 +994,7 @@ export default function page() {
               </button>
               {/* Gender Modal */}
               <button
-                onClick={() => setIsGenderOpen(!isGenderOpen)}
+                onClick={toggleGenderModal}
                 className="demographic__modal--btn"
               ></button>
               {isGenderOpen ? (
@@ -949,7 +1002,7 @@ export default function page() {
                   <div className="pt-[15px] pb-[18px] pl-[8px]">
                     <button
                       className="cursor-pointer"
-                      onClick={() => setIsGenderOpen(false)}
+                      onClick={toggleGenderModal}
                     >
                       <img src="/images/button-icon-back-shrunk.png" alt="" />
                     </button>
@@ -1459,8 +1512,9 @@ export default function page() {
         )}
       </main>
       <div className="bottom--demographic__box">
-        <Link href={"/introduction/upload"}
-          
+        <Link
+          href={"/introduction/upload"}
+          onClick={handleDeleteCapturedImage}
           className="cursor-pointer"
         >
           <img
@@ -1476,9 +1530,12 @@ export default function page() {
           <button className="mr-[8px] pt-[9px] pr-[16px] pb-[10px] pl-[16px] border-1 uppercase cursor-not-allowed">
             Reset
           </button>
-          <button className="pt-[9px] pr-[16px] pb-[10px] pl-[16px] bg-[#1a1b1c] text-[#f3f3f4] uppercase cursor-not-allowed">
+          <Link
+            href={"/"}
+            className="pt-[9px] pr-[16px] pb-[10px] pl-[16px] bg-[#1a1b1c] text-[#f3f3f4] uppercase cursor-pointer"
+          >
             Confirm
-          </button>
+          </Link>
         </div>
       </div>
     </div>
