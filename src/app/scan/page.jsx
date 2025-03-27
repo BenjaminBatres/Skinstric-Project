@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 export default function Page() {
   const router = useRouter();
   const videoRef = useRef(null);
+  const [isCountdown, setIsCountdown] = useState(false);
   const [state, setState] = useState({
     hasPermission: null,
     videoStream: null,
@@ -110,6 +111,7 @@ export default function Page() {
   }, [router]);
 
   const startCountdown = useCallback(() => {
+    setIsCountdown(true);
     setState((prev) => ({ ...prev, isCapturing: true, countdown: 3 }));
     const interval = setInterval(() => {
       setState((prev) => {
@@ -157,14 +159,15 @@ export default function Page() {
       />
 
       <button
-        className="absolute right-6 top-1/2 flex items-center justify-center w-16 h-16 bg-white text-[#1A1B1C] rounded-full shadow-lg"
+        className="absolute right-6 top-1/2 flex items-center justify-center w-16 h-16 bg-white text-[#1A1B1C] rounded-full shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isCountdown}
         onClick={startCountdown}
       >
         <Camera size={24} />
       </button>
 
       {state.isCapturing && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[white]">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-[#f3f3f4]">
           {state.countdown}
         </div>
       )}

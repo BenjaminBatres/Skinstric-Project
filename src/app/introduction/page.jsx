@@ -94,7 +94,7 @@ const IntroPage = () => {
                 {isFocused ? "Introduce yourself" : "click to type"}
               </h3>
               <input
-                className="w-2/3 h-6 sm:h-9 md:h-13 lg:h-15"
+                className="w-[70%] h-6 sm:h-9 md:h-13 lg:h-15"
                 type="text"
                 placeholder="Introduce Yourself"
                 onFocus={() => setIsFocused(true)}
