@@ -97,7 +97,7 @@ export default function page() {
           <Link
             href={"/analysis/demographics"}
             style={{
-              opacity: isProcceed ? "1" : "0",
+              visibility: isProcceed ? "visible" : "hidden",
               transition: "opacity 300ms ease-in-out",
             }}
             className="absolute bottom-8 right-8"

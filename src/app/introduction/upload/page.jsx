@@ -10,7 +10,9 @@ export default function page() {
   const [responseMessage, setResponseMessage] = useState("");
   const [responseUploadMessage, setResponseUploadMessage] = useState("");
   const [isImage, setIsImage] = useState(false);
+  const [isImageBtn, setIsImageBtn] = useState(false);
   const [isCapturedImage, setIsCapturedImage] = useState(false);
+  const [isCapturedImageBtn, setIsCapturedImageBtn] = useState(false);
   const [isProcceed, setIsProcceed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -33,13 +35,14 @@ export default function page() {
         console.error("Error converting to Base64:", error);
       };
       setIsImage(true);
+      setIsImageBtn(true);
     }
   };
 
   // Send Base64 string to API
   const handleUpload = async () => {
     setIsLoading(true); // Start loading
-    setIsImage(false);
+    setIsImageBtn(false);
 
     try {
       const response = await fetch(
@@ -69,7 +72,7 @@ export default function page() {
   const handleProcessImage = async () => {
     if (!capturedImage) return;
 
-    setIsCapturedImage(false);
+    setIsCapturedImageBtn(false);
     setIsUploading(true);
 
     try {
@@ -107,6 +110,7 @@ export default function page() {
     if (storedCapturedData) {
       setCapturedImage(storedCapturedData);
       setIsCapturedImage(true);
+      setIsCapturedImageBtn(true);
     } else {
       setCapturedImage(null);
     }
@@ -124,14 +128,18 @@ export default function page() {
       </h3>
       <div
         className="flex flex-col justify-around mt-0 items-center gap-0 sm:gap-4 sm:flex-row sm:mt-30"
+        style={{marginTop: isImage || isCapturedImage ? "140px" : "mt-30"}}
         data-aos="fade-in"
         data-aos-delay="800"
       >
-        <div className="flex flex-col items-center">
+        <div
+          className="flex flex-col items-center"
+          style={{ display: isImage ? "none" : "flex" }}
+        >
           <Link href={"/scan"}>
             <img
               src={capturedImage || "/images/camera.png"}
-              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px]  object-cover text-white rounded-[30%] flex items-center cursor-pointer transition"
+              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover text-white rounded-[30%] flex items-center cursor-pointer transition"
             ></img>
           </Link>
           <div className="mb-[8px] mt-5">
@@ -148,7 +156,7 @@ export default function page() {
           </div>
           <button
             style={{
-              visibility: isCapturedImage ? "visible" : "hidden",
+              visibility: isCapturedImageBtn ? "visible" : "hidden",
               transition: "visibility 300ms ease-in-out",
             }}
             onClick={handleProcessImage}
@@ -161,10 +169,11 @@ export default function page() {
         <label
           htmlFor="file-upload"
           className="cursor-pointer flex flex-col items-center"
+          style={{ display: isCapturedImage ? "none" : "flex" }}
         >
           <img
             src={base64Image || "/images/gallery.png"}
-            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] rounded-[30%] object-cover mt-2 sm:mt-0"
+            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] rounded-[30%] object-cover "
             alt="Gallery"
           />
 
@@ -182,7 +191,7 @@ export default function page() {
           </div>
           <button
             style={{
-              visibility: isImage ? "visible" : "hidden",
+              visibility: isImageBtn ? "visible" : "hidden",
               transition: "visibility 300ms ease-in-out",
             }}
             onClick={handleUpload}
