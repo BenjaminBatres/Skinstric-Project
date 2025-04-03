@@ -139,7 +139,7 @@ export default function page() {
           <Link href={"/scan"}>
             <img
               src={capturedImage || "/images/camera.png"}
-              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover text-white rounded-[30%] flex items-center cursor-pointer transition"
+              className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover flex items-center cursor-pointer transition"
             ></img>
           </Link>
           <div className="mb-[8px] mt-5">
@@ -173,7 +173,7 @@ export default function page() {
         >
           <img
             src={base64Image || "/images/gallery.png"}
-            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] rounded-[30%] object-cover "
+            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover"
             alt="Gallery"
           />
 
