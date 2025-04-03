@@ -128,7 +128,7 @@ export default function page() {
       </h3>
       <div
         className="flex flex-col justify-around mt-0 items-center gap-0 sm:gap-4 sm:flex-row sm:mt-30"
-        style={{marginTop: isImage || isCapturedImage ? "140px" : "mt-30"}}
+        style={{marginTop: isImage || isCapturedImage ? "100px" : "mt-30"}}
         data-aos="fade-in"
         data-aos-delay="800"
       >
