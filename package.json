@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:server\"",
+    "dev:next": "next dev",
+    "dev:server": "node backend/server.js",
     "build": "next build",
-    "start": "next start",
+    "start": "nodemon scripts.ts",
     "lint": "next lint"
   },
   "dependencies": {
-    "@react-google-maps/api": "^2.20.6",
+    "@prisma/client": "^6.6.0",
     "@tailwindcss/vite": "^4.0.9",
     "aos": "^3.0.0-beta.6",
     "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "browser-image-compression": "^2.0.2",
     "compressorjs": "^1.2.1",
-    "framer-motion": "^12.5.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "lucide-react": "^0.483.0",
     "next": "15.2.0",
     "react": "^19.0.0",
@@ -27,10 +31,20 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "22.13.14",
+    "@types/node": "^22.13.14",
     "@types/react": "19.0.12",
+    "concurrently": "^9.1.2",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
-    "tailwindcss": "^4.0.9"
-  }
+    "nodemon": "^3.1.9",
+    "prisma": "^6.6.0",
+    "tailwindcss": "^4.0.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "description": "This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

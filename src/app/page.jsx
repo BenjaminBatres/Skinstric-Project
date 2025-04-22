@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 
 import Header from "./components/Header";
 export default function Home() {
+  const [message, setMessage] = useState('');
   function displayIconBtns() {
     document.body.classList += " modal--open moving-element";
   }
@@ -17,7 +18,7 @@ export default function Home() {
     AOS.init({
       easing: "ease",
     });
-    localStorage.removeItem("capturedImage")
+    localStorage.removeItem("capturedImage");
   }, []);
 
   return (

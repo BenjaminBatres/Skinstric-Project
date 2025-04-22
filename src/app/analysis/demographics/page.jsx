@@ -191,8 +191,9 @@ export default function page() {
     progressText.textContent = `${percentage}%`;
   }
 
-  const handleDeleteCapturedImage = () => {
+  const goBack = () => {
     localStorage.removeItem("capturedImage");
+    history.back();
   };
 
   useEffect(() => {
@@ -204,9 +205,9 @@ export default function page() {
       const onMountRace = parsedData.data.race["east asian"];
       const onMountAge = parsedData.data.age["3-9"];
       const onMountSex = parsedData.data.gender.female;
-      setAPIResults(parsedData); 
+      setAPIResults(parsedData);
       // Mounts the progress circle
-      updateProgress(Math.round(onMountRace * 100)); 
+      updateProgress(Math.round(onMountRace * 100));
       updateProgressRace(Math.round(onMountRace * 100));
       updateProgressAge(Math.round(onMountAge * 100));
       updateProgressSex(Math.round(onMountSex * 100));
@@ -1512,17 +1513,13 @@ export default function page() {
         )}
       </main>
       <div className="bottom--demographic__box">
-        <Link
-          href={"/introduction/upload"}
-          onClick={handleDeleteCapturedImage}
-          className="cursor-pointer"
-        >
+        <button onClick={goBack} className="cursor-pointer">
           <img
             src="/images/button-icon-back-shrunk.png"
             className="w-[90px] sm:w-auto"
             alt=""
           />
-        </Link>
+        </button>
         <p className="text-[#A0A4AB]">
           If A.I. estimate is wrong, select the correct one.
         </p>

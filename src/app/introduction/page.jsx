@@ -4,6 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
+import { useRouter } from "next/navigation";
 
 const IntroPage = () => {
   const [step, setStep] = useState(1);
@@ -12,6 +13,7 @@ const IntroPage = () => {
   const [error, setError] = useState(""); // Error message state
   const [errorLocation, setErrorLocation] = useState(""); // Error message state
   const [location, setLocation] = useState("");
+  const router = useRouter();
 
   const validateName = (input) => {
     const nameRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
@@ -53,16 +55,16 @@ const IntroPage = () => {
     validateLocation(inputValue); // Validate input on change
   };
 
-  const goToNextStep = () => {
-    if (step === 1 && name.trim() !== "") {
-      setStep(2);
-    }
-  };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      goToNextStep();
-    }
+  const handleSubmit = async () => {
+    const res = await fetch("http://localhost:5000/api/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, location }),
+    });
+
+    const data = await res.json();
+    router.push(`/introduction/upload?id=${data.id}`);
   };
 
   useEffect(() => {
@@ -99,7 +101,6 @@ const IntroPage = () => {
                 placeholder="Introduce Yourself"
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                onKeyDown={handleKeyPress}
                 value={name}
                 onChange={handleNameChange}
               />
@@ -154,12 +155,11 @@ const IntroPage = () => {
       {step === 2 && (
         <>
           {location && !errorLocation && (
-            <Link
-              href={"/introduction/upload"}
-              className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8"
-            >
-              <img src="/images/button-icon-proceed-shrunk.png" alt="" />
-            </Link>
+            <div className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8 flex items-center">
+              <button onClick={handleSubmit} className="cursor-pointer">
+                <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+              </button>
+            </div>
           )}
         </>
       )}

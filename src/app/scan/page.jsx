@@ -4,11 +4,13 @@ import Compressor from "compressorjs";
 import { Camera, Diamond } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const router = useRouter();
   const videoRef = useRef(null);
   const [isCountdown, setIsCountdown] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false)
   const [state, setState] = useState({
     hasPermission: null,
     videoStream: null,
@@ -69,7 +71,12 @@ export default function Page() {
       OverconstrainedError: "No camera device meets the specified constraints.",
       default: "An unknown error occurred while accessing the camera.",
     };
-    alert(messages[error.name] || messages.default);
+    toast.error(messages[error.name] || messages.default);
+    setIsDisabled(true)
+    setTimeout(() => {
+      history.back();
+    }, 3000);
+    // alert(messages[error.name] || messages.default);
   };
 
   const handleCaptureImage = useCallback(() => {
@@ -160,7 +167,7 @@ export default function Page() {
 
       <button
         className="absolute right-6 top-1/2 flex items-center justify-center w-16 h-16 bg-white text-[#1A1B1C] rounded-full shadow-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={isCountdown}
+        disabled={isCountdown || isDisabled}
         onClick={startCountdown}
       >
         <Camera size={24} />

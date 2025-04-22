@@ -7,13 +7,15 @@ export default function page() {
   const [isLoading, setLoading] = useState(false);
   const [isProcceed, setIsProcceed] = useState(false);
 
-  const handleDeleteCapturedImage = () => {
-    localStorage.removeItem("capturedImage");
-  };
-
   const handleOnClick = () => {
     setIsProcceed(true);
   };
+
+  const goBack = () => {
+    localStorage.removeItem("capturedImage");
+    history.back()
+  }
+  
 
   useEffect(() => {
     AOS.init({
@@ -83,17 +85,16 @@ export default function page() {
             </button>
           </div>
 
-          <Link
-            href={"/introduction/upload"}
-            onClick={handleDeleteCapturedImage}
+          <button
             className="absolute left-8 bottom-8 cursor-pointer"
+            onClick={goBack}
           >
             <img
               src="/images/button-icon-back-shrunk.png"
               className="w-[85px]"
               alt=""
             />
-          </Link>
+          </button>
           <Link
             href={"/analysis/demographics"}
             style={{
