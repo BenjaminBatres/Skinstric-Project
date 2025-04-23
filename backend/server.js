@@ -12,7 +12,6 @@ const prisma = new PrismaClient();
 
 app.post("/api/posts", async (req, res) => {
   const { name, location } = req.body;
-
   if (!name || !location) {
     return res.status(400).json({ message: "Missing fields" });
   }
