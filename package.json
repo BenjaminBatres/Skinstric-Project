@@ -7,8 +7,9 @@
     "dev:next": "next dev",
     "dev:server": "node backend/server.js",
     "build": "next build",
-    "start": "nodemon scripts.ts",
-    "lint": "next lint"
+    "start": "node api/posts.js",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
