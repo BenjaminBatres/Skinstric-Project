@@ -1,6 +1,7 @@
 // api/update-image.js
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+// Image put request
 
 module.exports = async (req, res) => {
   if (req.method === "PUT") {
