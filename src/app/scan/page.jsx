@@ -33,7 +33,7 @@ export default function Page() {
   useEffect(() => {
     const handlePermissionChange = async () => {
       if (state.hasPermission === false) {
-        router.push("/introduction/upload");
+        history.back()
       } else if (state.hasPermission === true) {
         if (
           typeof navigator !== "undefined" &&
@@ -108,7 +108,7 @@ export default function Page() {
                 variant: "default",
               },
             }));
-            setTimeout(() => router.push("/introduction/upload"), 2000);
+            setTimeout(() => history.back(), 2000);
           };
           reader.readAsDataURL(compressedBlob);
         },

@@ -7,7 +7,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import imageCompression from "browser-image-compression";
 import { toast } from "react-toastify";
 
-
 export default function page() {
   const [base64Image, setBase64Image] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
@@ -24,7 +23,6 @@ export default function page() {
   const params = useSearchParams();
   const id = params.get("id");
   const router = useRouter();
-  
 
   // Convert image to Base64
   const handleImageUpload = async (e) => {
@@ -82,11 +80,14 @@ export default function page() {
 
   // Send Base string to the database
   const handleUploadImgSubmit = async () => {
-    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: base64Image, id: id } ),
-    });
+    const res = await fetch(
+      `https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: base64Image, id: id }),
+      }
+    );
     const data = await res.json();
     if (data.message === "Image uploaded successfully!") {
       router.push("/analysis");
@@ -96,7 +97,7 @@ export default function page() {
         router.push("/introduction");
       }, 3000);
     }
-  };  
+  };
   // Captured Image
   const handleProcessImage = async () => {
     if (!capturedImage) return;
@@ -120,12 +121,12 @@ export default function page() {
 
       const result = await response.json();
       localStorage.setItem("capturedImage", JSON.stringify(result));
-      if (result) {
-        setIsProcceedCapturedImg(true);
-      }
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setResponseUploadMessage("Uploaded Complete");
+      if (result) {
+        setIsProcceedCapturedImg(true);
+      }
     } catch (error) {
       setResponseUploadMessage(`Error: ${error.message}`);
       console.error("Error processing image:", error);
@@ -135,11 +136,14 @@ export default function page() {
   };
   // Send Captured Image to the database
   const handleCapturedImgSubmit = async () => {
-    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: capturedImage, id: id }),
-    });
+    const res = await fetch(
+      `https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: capturedImage, id: id }),
+      }
+    );
 
     const data = await res.json();
     if (data.message === "Image uploaded successfully!") {
