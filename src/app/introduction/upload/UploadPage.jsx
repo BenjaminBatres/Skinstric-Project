@@ -24,7 +24,6 @@ export default function page() {
   const params = useSearchParams();
   const id = params.get("id");
   const router = useRouter();
-  console.log(id)
   
 
   // Convert image to Base64
@@ -83,22 +82,21 @@ export default function page() {
 
   // Send Base string to the database
   const handleUploadImgSubmit = async () => {
-    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts/${id}`, {
+    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: base64Image }),
+      body: JSON.stringify({ image: base64Image, id: id } ),
     });
-
     const data = await res.json();
     if (data.message === "Image uploaded successfully!") {
       router.push("/analysis");
     } else {
       toast.error(data.message);
       setTimeout(() => {
-        router.push('/introduction')
+        router.push("/introduction");
       }, 3000);
     }
-  };
+  };  
   // Captured Image
   const handleProcessImage = async () => {
     if (!capturedImage) return;
@@ -137,7 +135,7 @@ export default function page() {
   };
   // Send Captured Image to the database
   const handleCapturedImgSubmit = async () => {
-    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts/${id}`, {
+    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ image: capturedImage }),

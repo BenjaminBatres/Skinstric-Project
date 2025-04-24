@@ -1,17 +1,15 @@
-// api/update-image.js
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-// Image put request
 
 module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // Handle preflight request
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
+
   if (req.method === "PUT") {
     const { id, image } = req.body;
 
@@ -27,7 +25,7 @@ module.exports = async (req, res) => {
 
       return res.status(200).json({ message: "Image uploaded successfully!" });
     } catch (error) {
-      console.error(error);
+      console.error("Update error:", error);
       return res.status(500).json({ message: "Server error" });
     }
   }
