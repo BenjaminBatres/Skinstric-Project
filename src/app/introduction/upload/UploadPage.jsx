@@ -135,10 +135,10 @@ export default function page() {
   };
   // Send Captured Image to the database
   const handleCapturedImgSubmit = async () => {
-    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image/${id}`, {
+    const res = await fetch(`https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: capturedImage }),
+      body: JSON.stringify({ image: capturedImage, id: id }),
     });
 
     const data = await res.json();
