@@ -17,6 +17,7 @@ export default function page() {
   const [isCapturedImageBtn, setIsCapturedImageBtn] = useState(false);
   const [isProcceedUploadImg, setIsProcceedUploadImg] = useState(false);
   const [isProcceedCapturedImg, setIsProcceedCapturedImg] = useState(false);
+  const [isProcceedLoading, setIsProcceedLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
@@ -80,6 +81,7 @@ export default function page() {
 
   // Send Base string to the database
   const handleUploadImgSubmit = async () => {
+    setIsProcceedLoading(true)
     const res = await fetch(
       `https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`,
       {
@@ -136,6 +138,7 @@ export default function page() {
   };
   // Send Captured Image to the database
   const handleCapturedImgSubmit = async () => {
+    setIsProcceedLoading(true)
     const res = await fetch(
       `https://skintric-project-chaparro-bens-projects.vercel.app/api/posts-update-image`,
       {
@@ -209,7 +212,7 @@ export default function page() {
               transition: "visibility 300ms ease-in-out",
             }}
             onClick={handleProcessImage}
-            className="px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer"
+            className={`px-4 py-2 bg-[#1a1b1c] text-white text-xs sm:text-base rounded-lg hover:opacity-80 transition duration-300 cursor-pointer disabled:cursor-not-allowed ${isCapturedImageBtn ? 'hidden' : 'block'}`}
           >
             Upload Image
           </button>
@@ -217,12 +220,13 @@ export default function page() {
 
         <label
           htmlFor="file-upload"
-          className="cursor-pointer flex flex-col items-center"
+          className="flex flex-col items-center"
           style={{ display: isCapturedImage ? "none" : "flex" }}
+          
         >
           <img
             src={base64Image || "/images/gallery.png"}
-            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover"
+            className="w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] md:w-[400px] md:h-[400px] xl:max-w-[500px] object-cover cursor-pointer"
             alt="Gallery"
           />
 
@@ -277,11 +281,16 @@ export default function page() {
         }}
         className="absolute bottom-8 right-8 cursor-pointer"
       >
-        <img
-          src="/images/button-icon-proceed-shrunk.png"
-          className="w-[110px] h-auto sm:w-auto"
-          alt=""
-        />
+        {isProcceedLoading ? (
+          <div className="text-xl animate-pulse">Loading...</div>
+        ) : (
+          <img
+            src="/images/button-icon-proceed-shrunk.png"
+            className="w-[110px] h-auto sm:w-auto"
+            alt=""
+          />
+
+        )}
       </button>
       <button
         onClick={handleCapturedImgSubmit}
@@ -291,11 +300,16 @@ export default function page() {
         }}
         className="absolute bottom-8 right-8 cursor-pointer"
       >
-        <img
-          src="/images/button-icon-proceed-shrunk.png"
-          className="w-[110px] h-auto sm:w-auto"
-          alt=""
-        />
+        {isProcceedLoading ? (
+          <div className="text-xl animate-pulse">Loading...</div>
+        ) : (
+          <img
+            src="/images/button-icon-proceed-shrunk.png"
+            className="w-[110px] h-auto sm:w-auto"
+            alt=""
+          />
+
+        )}
       </button>
     </>
   );

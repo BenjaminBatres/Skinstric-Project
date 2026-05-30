@@ -14,6 +14,7 @@ const IntroPage = () => {
   const [errorLocation, setErrorLocation] = useState(""); // Error message state
   const [location, setLocation] = useState("");
   const router = useRouter();
+  const [isLoading, setIsloading] = useState(false)
 
   const validateName = (input) => {
     const nameRegex = /^[A-Za-z\s]+$/; // Allows only letters and spaces
@@ -57,6 +58,7 @@ const IntroPage = () => {
 
 
   const handleSubmit = async () => {
+    setIsloading(true)
     const res = await fetch("https://skintric-project-chaparro-bens-projects.vercel.app/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -156,8 +158,13 @@ const IntroPage = () => {
         <>
           {location && !errorLocation && (
             <div className="absolute bottom-16 sm:bottom-8 right-4 sm:right-8 flex items-center">
-              <button onClick={handleSubmit} className="cursor-pointer">
-                <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+              <button onClick={handleSubmit} disabled={isLoading} className="cursor-pointer disabled:cursor-not-allowed">
+                {isLoading ? (
+                  <div className="text-xl animate-pulse">Loading...</div>
+                ) : (
+                  <img src="/images/button-icon-proceed-shrunk.png" alt="" />
+
+                )}
               </button>
             </div>
           )}
