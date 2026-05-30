@@ -23,7 +23,7 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "lucide-react": "^0.483.0",
-    "next": "15.2.0",
+    "next": "15.2.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-toastify": "^11.0.5",
